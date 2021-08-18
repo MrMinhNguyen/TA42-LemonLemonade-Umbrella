@@ -20,7 +20,7 @@ def connect_to_db():
     return mysql.connector.connect(
         host="localhost",
         user="lemon",
-        password="lemonade",
+        password="FIT5120lemonade",
         database="lemon_lemonade"
     )
 
@@ -39,7 +39,8 @@ def find_coordinate(postcode):
 app = Flask(__name__)
 
 @app.route('/uvr_inner_suburbs')
-def uvr_88_suburbs():
+def uvr_inner_suburbs():
+    # 17 Innter suburbs 10km away from CBD
     INNER_SUBURBS = [3000, 3003, 3004, 3008, 3010, 3050, 3051, 3051, 3052, 3052, 3053, 3053, 3054, 3054, 3065, 3066, 3066, 3067]
 
     result=[]
