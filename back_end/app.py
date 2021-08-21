@@ -25,11 +25,25 @@ def get_api_key():
         
 # This function return a connection to the database
 def connect_to_db():
+    # Get azure authentication
+    all_info = []
+    f = open('azure_database_authentication.txt', 'r')
+    lines = f.readlines()
+    for l in lines:
+        all_info.append(str(l).rstrip())
+        
+    db_info = {
+        'server_name': all_info[0],
+        'user_name': all_info[1],
+        'pwd': all_info[2],
+        'db_name': all_info[3] 
+    }
+
     return mysql.connector.connect(
-        host="localhost",
-        user="lemon",
-        password="FIT5120lemonade",
-        database="lemon_lemonade"
+        host=db_info['server_name'],
+        user=db_info['user_name'],
+        password=db_info['pwd'],
+        database=db_info['db_name']
     )
 
 # This function find the given suburb info from the database
@@ -99,7 +113,7 @@ def uvr_inner_suburbs():
             'UVR': data['result']['uv'],
             'max_UVR': data['result']['uv_max']
         })
-    return result
+    return str(result)
 
 # API to get current UVR for a specific location
 @app.route('/uvr_location')
@@ -122,7 +136,7 @@ def uvr_location():
         'UVR': data['result']['uv'],
         'max_UVR': data['result']['uv_max']
     }
-    return result
+    return str(result)
 
 # API to get historical UVR group by Months
 @app.route('/uv_by_month')
@@ -145,7 +159,7 @@ def uv_by_month():
             'year': rec[2],
             'avg_UVR': rec[3]
         })
-    return result
+    return str(result)
 
 # API to get historical UVR group by Years
 @app.route('/uvr_by_year')
@@ -167,7 +181,7 @@ def uvr_by_year():
             'year': rec[0],
             'avg_UVR': rec[1]
         })
-    return result
+    return str(result)
 
 # @app.route('/uvr_protector')
 # def uvr_protector():
@@ -182,6 +196,6 @@ def uvr_by_year():
 #     # Query data from DB
 #     return 'All protecctors'
     
-# The main API application would be run (on localhost) at port 8080
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+# # The main API application would be run (on localhost) at port 8080
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=8080)

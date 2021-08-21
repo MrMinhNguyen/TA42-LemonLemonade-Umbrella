@@ -1,8 +1,28 @@
 from sqlalchemy import create_engine
 import pandas as pd
 
+# Get azure authentication
+all_info = []
+f = open('azure_database_authentication.txt', 'r')
+lines = f.readlines()
+for l in lines:
+    all_info.append(str(l).rstrip())
+db_info = {
+    'server_name': all_info[0],
+    'user_name': all_info[1],
+    'pwd': all_info[2],
+    'db_name': all_info[3] 
+}
+
 # Create connection to DB
-engine = create_engine("mysql+mysqlconnector://lemon:FIT5120lemonade@localhost/lemon_lemonade")
+engine = create_engine(
+    "mysql+mysqlconnector://{user_name}:{pwd}@{server_name}/{db_name}".format(
+        user_name=db_info['user_name'],
+        pwd=db_info['pwd'],
+        server_name=db_info['server_name'],
+        db_name=db_info['db_name']
+    )
+)
 
 # Specify the headers
 header_list = ["timestamp", "lat", "lng", 'uv_index']
