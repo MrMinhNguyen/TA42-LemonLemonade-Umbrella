@@ -11,7 +11,7 @@
 p,li {
  text-align: center;
 }
-h3,h4 {
+.yellowc {
   color: #FADD2D;
   text-align: center;
 }
@@ -19,37 +19,38 @@ h3,h4 {
 u {
   text-decoration: underline;
 }
-ora {
+yeb {
 text-shadow: 2px 2px 3px gold;
 font-weight: #FADD2D;
+font-weight: bold;
 }
 </style>
 </head>
 <body>
 
-  <h4>Did you know?</h4>
+  <h4 class= "yellowc">Did you know?</h4>
   
 <div class="container">
   <div class="row">
     <div class="col-sm-4">
-      <h3>7%</h3>
+      <h3 class="yellowc">7%</h3>
       <p>The solar ultraviolet intensity in Australia in summer is <u>7% </u>higher than that in Europe.</p>
     </div>
     <div class="col-sm-4">
-      <h3>4/100, 3/100</h3>
+      <h3 class="yellowc">4/100, 3/100</h3>
       <p>In Australia, before reaching the age of 75, </p>
       <li> <u>4</u> out of every 100 men</li>
       <li> <u>3</u> out of every 100 women</li> 
       <p>may develop melanoma.</p>
     </div>
     <div class="col-sm-4">
-      <h3>10 mins</h3>        
+      <h3 class="yellowc">10 mins</h3>        
       <p>Children’s skin is more susceptible to UV damage than adults, and can get sunburnt in as little as <u>10 minutes</u>.
 </p>
     </div>
   </div>
 </div>
-<p> As it spends its summer when the earth is <ora>at perihelion</ora>, and being influenced by the <ora>ozone hole</ora>, Australia is exposed to stronger ultraviolet rays in summer <ora>than most countries</ora>. </p>
+<p> As it spends its summer when the earth is <yeb>at perihelion</yeb>, and being influenced by the <yeb>ozone hole</yeb>, Australia is exposed to stronger ultraviolet rays in summer <yeb>than most countries</yeb>. </p>
 
 </body>
 </html>
