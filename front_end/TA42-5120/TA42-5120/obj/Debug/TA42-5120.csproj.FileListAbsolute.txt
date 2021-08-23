@@ -76,4 +76,3 @@ C:\Users\49429\source\repos\TA42-5120\TA42-5120\obj\Debug\TA42-5120.csproj.CoreC
 C:\Users\49429\source\repos\TA42-5120\TA42-5120\obj\Debug\TA42-5120.csproj.CopyComplete
 C:\Users\49429\source\repos\TA42-5120\TA42-5120\obj\Debug\TA42-5120.dll
 C:\Users\49429\source\repos\TA42-5120\TA42-5120\obj\Debug\TA42-5120.pdb
-C:\Users\49429\source\repos\TA42-5120\TA42-5120\obj\Debug\TA42-5120.csproj.AssemblyReference.cache

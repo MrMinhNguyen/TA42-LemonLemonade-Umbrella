@@ -24,6 +24,7 @@ namespace TA42_5120
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/styles.css",
+                     
                       "~/Content/site.css"));
         }
     }

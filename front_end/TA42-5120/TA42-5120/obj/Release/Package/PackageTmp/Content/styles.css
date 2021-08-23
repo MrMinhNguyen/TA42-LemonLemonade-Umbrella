@@ -157,6 +157,27 @@ p {
   margin-bottom: 1rem;
 }
 
+yeb {
+    text-shadow: 2px 2px 3px gold;
+    font-weight: #FADD2D;
+    font-weight: bold;
+}
+.yellowc {
+    color: #FADD2D;
+    text-align: center;
+}
+
+un {
+    text-decoration: underline;
+}
+
+pc, lic {
+    text-align: center;
+}
+
+
+
+
 abbr[title],
 abbr[data-bs-original-title] {
   -webkit-text-decoration: underline dotted;
@@ -238,9 +259,9 @@ a {
   color: #212529;
   text-decoration: none;
 }
-a:hover {
-  color: #0085A1;
-}
+    a:hover {
+        color: #FADD2D;
+    }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
   color: inherit;
@@ -571,7 +592,7 @@ progress {
     display: inline-block;
 }
 .list-inline-item:not(:last-child) {
-  margin-right: 2rem;
+  margin-right: 5rem;
 }
 
 .initialism {
@@ -681,6 +702,8 @@ progress {
   padding-left: calc(var(--bs-gutter-x) * .5);
   margin-top: var(--bs-gutter-y);
 }
+
+
 
 .col {
   flex: 1 0 0%;
@@ -2995,25 +3018,25 @@ textarea.form-control-lg {
 
 /*w3schools example about button*/
 .button-data {
-    background-image: url('../assets/img/homeImage2.png');
-    background-size: 120px 100px;
+    background-image: url('../assets/img/UVData.jpg');
+    background-size: 100% 100%;
     border: none;
     color: white;
-    padding: 30px 32px;
+    padding-top: 130px;
+    padding-right: 55px;
+    padding-bottom: 80px;
+    padding-left: 55px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 20px;
+    font-size: 30px;
     margin: 4px 2px;
     transition-duration: 0.4s;
     cursor: pointer;
-    background-color: white;
-    color: black;
 }
 
 .button-data:hover {
-    background-color: #ffcccb;
-    color: #000;
+    color: white;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
@@ -6569,6 +6592,12 @@ textarea.form-control-lg {
 
 .bottom-0 {
   bottom: 0 !important;
+}
+
+.layout {
+    padding:0px;
+    margin:0px;
+
 }
 
 .bottom-50 {
@@ -11132,15 +11161,15 @@ blockquote {
   #mainNav .navbar-brand {
     color: #000;
   }
-  #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
-    color: rgba(255, 255, 255, 0.8);
-  }
+    #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+        color: #FADD2D;
+    }
   #mainNav .navbar-nav > li.nav-item > a.nav-link {
     color: #000;
   }
-  #mainNav .navbar-nav > li.nav-item > a.nav-link:focus, #mainNav .navbar-nav > li.nav-item > a.nav-link:hover {
-    color: rgba(255, 255, 255, 0.8);
-  }
+    #mainNav .navbar-nav > li.nav-item > a.nav-link:focus, #mainNav .navbar-nav > li.nav-item > a.nav-link:hover {
+        color: #FADD2D;
+    }
 }
 @media (min-width: 992px) {
   #mainNav {
@@ -11167,9 +11196,9 @@ blockquote {
   #mainNav.is-fixed .navbar-nav > li.nav-item > a {
     color: #212529;
   }
-  #mainNav.is-fixed .navbar-nav > li.nav-item > a:focus, #mainNav.is-fixed .navbar-nav > li.nav-item > a:hover {
-    color: #0085A1;
-  }
+    #mainNav.is-fixed .navbar-nav > li.nav-item > a:focus, #mainNav.is-fixed .navbar-nav > li.nav-item > a:hover {
+        color: #FADD2D;
+    }
   #mainNav.is-visible {
     /* if the user changes the scrolling direction, we show the header */
     transform: translate3d(0, 100%, 0);
@@ -11182,25 +11211,31 @@ footer {
 }
 
 header.masthead {
-  position: relative;
-  margin-bottom: 3rem;
-  padding-top: calc(8rem + 57px);
-  padding-bottom: 8rem;
-  background: no-repeat center center;
-  background-color: #6c757d;
-  background-size: cover;
-  background-attachment: scroll;
+    margin:33px;
+    margin-top: 20px;
+    position: relative;
+    margin-bottom: 3rem;
+    padding-top: calc(8rem + 57px);
+    padding-bottom: 8rem;
+    background: no-repeat center center;
+    background-color: #6c757d;
+    background-size: cover;
+    background-attachment: scroll;
 }
-header.masthead:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #212529;
-  opacity: 0.5;
-}
+    header.masthead:before {
+        margin-top: 50px;
+        margin-bottom: 15px;
+        margin-right: 45px;
+        margin-left: 55px;
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #212529;
+        opacity: 0.5;
+    }
 header.masthead .page-heading,
 header.masthead .post-heading,
 header.masthead .site-heading {
