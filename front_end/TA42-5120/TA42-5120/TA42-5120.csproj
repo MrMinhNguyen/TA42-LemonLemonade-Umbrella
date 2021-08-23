@@ -124,19 +124,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\uvr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\favicon.ico" />
-    <Content Include="assets\img\about-bg.jpg" />
-    <Content Include="assets\img\contact-bg.jpg" />
-    <Content Include="assets\img\home-bg.jpg" />
-    <Content Include="assets\img\homeImage1.jpg" />
-    <Content Include="assets\img\homeImage2.png" />
+    <Content Include="assets\img\222.jpg" />
     <Content Include="assets\img\homeImage3.png" />
     <Content Include="assets\img\homeImage4.png" />
-    <Content Include="assets\img\post-bg.jpg" />
-    <Content Include="assets\img\post-sample-image.jpg" />
+    <Content Include="assets\img\Protection.jpg" />
+    <Content Include="assets\img\Quiz.jpg" />
+    <Content Include="assets\img\sunglass.jpg" />
+    <Content Include="assets\img\sunscreen.jpg" />
+    <Content Include="assets\img\tshirt.png" />
+    <Content Include="assets\img\umbrella.jpg" />
+    <Content Include="assets\img\UVData.jpg" />
+    <Content Include="assets\img\UVLevel.png" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -179,7 +182,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
