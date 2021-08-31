@@ -124,22 +124,41 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\subuvr.cs" />
     <Compile Include="Models\uvr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\favicon.ico" />
     <Content Include="assets\img\222.jpg" />
+    <Content Include="assets\img\cloth.png" />
+    <Content Include="assets\img\clothcover.png" />
+    <Content Include="assets\img\clothtitle.jpg" />
+    <Content Include="assets\img\clothumbrella.jpg" />
+    <Content Include="assets\img\hat.png" />
+    <Content Include="assets\img\hat1.jpg" />
+    <Content Include="assets\img\hatcover.png" />
+    <Content Include="assets\img\hats2.png" />
     <Content Include="assets\img\homeImage3.png" />
     <Content Include="assets\img\homeImage4.png" />
+    <Content Include="assets\img\monthly.jpg" />
     <Content Include="assets\img\Protection.jpg" />
     <Content Include="assets\img\Quiz.jpg" />
-    <Content Include="assets\img\sunglass.jpg" />
-    <Content Include="assets\img\sunscreen.jpg" />
-    <Content Include="assets\img\tshirt.png" />
-    <Content Include="assets\img\umbrella.jpg" />
+    <Content Include="assets\img\search.png" />
+    <Content Include="assets\img\suncreen.png" />
+    <Content Include="assets\img\sunglass.png" />
+    <Content Include="assets\img\sunglasses1.png" />
+    <Content Include="assets\img\sunglassescover.png" />
+    <Content Include="assets\img\sunglasseslens.png" />
+    <Content Include="assets\img\sunprotectiontitle.jpg" />
+    <Content Include="assets\img\sunscreencover.png" />
+    <Content Include="assets\img\sunt.jpg" />
+    <Content Include="assets\img\suntext.jpg" />
+    <Content Include="assets\img\upfcloth.jpg" />
     <Content Include="assets\img\UVData.jpg" />
     <Content Include="assets\img\UVLevel.png" />
+    <Content Include="assets\img\UVLevel2.png" />
+    <Content Include="assets\img\yearly.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -177,8 +196,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Data.cshtml" />
-    <Content Include="Views\Home\Recommend.cshtml" />
-    <Content Include="Views\Home\Educate.cshtml" />
+    <Content Include="Views\Home\Trend.cshtml" />
+    <Content Include="Views\Home\SuburbUV.cshtml" />
+    <Content Include="Views\Home\Suncream.cshtml" />
+    <Content Include="Views\Home\Sunglasses.cshtml" />
+    <Content Include="Views\Home\Hat.cshtml" />
+    <Content Include="Views\Home\Cloth.cshtml" />
+    <Content Include="Views\Home\Protector.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
