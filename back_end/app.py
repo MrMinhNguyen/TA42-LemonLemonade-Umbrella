@@ -50,9 +50,10 @@ def connect_to_db():
 def find_coordinate(postcode):
     db_connection = connect_to_db()
     db_cursor = db_connection.cursor()
-    db_cursor.execute("SELECT * FROM suburbs WHERE postcode="+postcode)
+    
     # If valid post code then return actual result
     try:
+        db_cursor.execute("SELECT * FROM suburbs WHERE postcode="+postcode)
         record = db_cursor.fetchall()[0]
         coord = {
             'lat': record[4],
