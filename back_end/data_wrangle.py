@@ -29,8 +29,7 @@ hat = pd.read_csv("protectors/hat.csv")
 sunglasses = pd.read_csv("protectors/sunglasses.csv")
 sunscreen = pd.read_csv("protectors/sunscreen.csv")
 umbrella_n_clothes = pd.read_csv("protectors/umbrella_n_clothes.csv")
-
-# Insert whole DataFrame into MySQL
+# Insert into MySQL
 hat.to_sql('hat', con=engine, if_exists='append', chunksize=1000)
 sunglasses.to_sql('sunglasses', con=engine, if_exists='append', chunksize=1000)
 sunscreen.to_sql('sunscreen', con=engine, if_exists='append', chunksize=1000)
@@ -38,6 +37,17 @@ umbrella_n_clothes.to_sql('umbrella_clothes', con=engine, if_exists='append', ch
 
 # Read postcode data
 suburbs = pd.read_csv("australian_postcodes.csv")
+# insert into MySQL 
 suburbs = suburbs[['postcode', 'locality', 'long', 'lat', 'state']]
 suburbs = suburbs[suburbs.state == 'VIC']
 suburbs.to_sql('suburbs', con=engine, if_exists='append', chunksize=1000)
+
+# read quiz data from local file
+quiz = pd.read_csv("Quiz/quiz.csv")
+# Boolean to string
+quiz.Answer = quiz.Answer.astype(str)
+quiz.Selection_1 = quiz.Selection_1.astype(str)
+quiz.Selection_2 = quiz.Selection_2.astype(str)
+quiz = quiz.convert_dtypes()
+# insert into MySQL 
+quiz.to_sql('quiz', con=engine, if_exists='append', chunksize=1000)
