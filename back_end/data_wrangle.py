@@ -7,6 +7,8 @@ f = open('azure_database_authentication.txt', 'r')
 lines = f.readlines()
 for l in lines:
     all_info.append(str(l).rstrip())
+
+# Authentication info
 db_info = {
     'server_name': all_info[0],
     'user_name': all_info[1],
@@ -23,6 +25,15 @@ engine = create_engine(
         db_name=db_info['db_name']
     )
 )
+# For local testing
+# engine = create_engine(
+#     "mysql+mysqlconnector://lemon:FIT5120lemonade@localhost/lemon_lemonade".format(
+#         user_name=db_info['user_name'],
+#         pwd=db_info['pwd'],
+#         server_name=db_info['server_name'],
+#         db_name=db_info['db_name']
+#     )
+# )
 
 # read hat, sunglasses, sunscreen, umbrella_n_clothes dataset from local file
 hat = pd.read_csv("protectors/hat.csv")
@@ -51,3 +62,20 @@ quiz.Selection_2 = quiz.Selection_2.astype(str)
 quiz = quiz.convert_dtypes()
 # insert into MySQL 
 quiz.to_sql('quiz', con=engine, if_exists='append', chunksize=1000)
+
+# Read hospitals data
+original_file = open("hospitals/australian_hospitals.csv", encoding="utf-8", errors='ignore')
+wrangled_file = open("hospitals/australian_hospitals_wrangled.csv", "w")
+for line in original_file.readlines():
+    wrangled_file.write(line)
+
+hospitals = pd.read_csv("hospitals/australian_hospitals_wrangled.csv")
+hospitals = hospitals[['Hospital name', 'Phone number', 'Street address', 'Suburb', 'Postcode', 'State', 'Sector', 'Latitude', 'Longitude']]
+hospitals = hospitals.rename(
+    columns={
+        'Hospital name': 'name', 
+        'Phone number': 'phone',
+        'Street address': 'address'
+    }
+)
+hospitals.to_sql('hospitals', con=engine, if_exists='append', chunksize=1000)

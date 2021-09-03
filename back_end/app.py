@@ -100,7 +100,7 @@ app = Flask(__name__)
 # Generate the APIs
 # -----------------
 
-# API to get current UVR for a specific location
+# API to get current UVR for a specific location (Iteration 1)
 @app.route('/uvr_location')
 def uvr_location():
 
@@ -123,13 +123,13 @@ def uvr_location():
     }
     return str(result)
 
-# API to get current UVR for 18 suburbs near the CBD
+# API to get current UVR for 18 most crowded suburbs in Melbourne
 @app.route('/uvr_inner_suburbs')
 def uvr_inner_suburbs():
-    # 18 Innter suburbs 10km away from CBD
-    INNER_SUBURBS = ['3000', '3003', '3004', '3008', '3010', '3050', 
-                    '3051', '3051', '3052', '3052', '3053', '3053', 
-                    '3054', '3054', '3065', '3066', '3066', '3067']
+    # 18 most crowded suburbs in Melbourne
+    INNER_SUBURBS = ['3000', '3121', '3182', '3056', '3141', '3051', 
+                    '3181', '3053', '3006', '3183', '3207', '3184', 
+                    '3068', '3057', '3031', '3065', '3162', '3168']
 
     # List of data to return
     result=[]
@@ -154,7 +154,7 @@ def uvr_inner_suburbs():
     return str(result)
 
 
-# API to get historical UVR group by Months
+# API to get historical UVR group by Months (Iteration 1)
 @app.route('/uvr_by_month')
 def uv_by_month():
     # Create connection to database
@@ -177,7 +177,7 @@ def uv_by_month():
         })
     return str(result)
 
-# API to get historical UVR group by Years
+# API to get historical UVR group by Years (Iteration 1)
 @app.route('/uvr_by_year')
 def uvr_by_year():
     # Create connection to database
@@ -199,6 +199,7 @@ def uvr_by_year():
         })
     return str(result)
 
+# API to get protectors based on UVR
 @app.route('/uvr_protector')
 def uvr_protector():
 
@@ -250,9 +251,20 @@ def uvr_protector():
     
     # Compose result data
     for rec in records:
+        if rec[2] == '1':
+            pa_str = 'PA+'
+        elif rec[2] == '2':
+            pa_str = 'PA++'
+        elif rec[2] == '3':
+            pa_str = 'PA+++'
+        elif rec[2] == '4':
+            pa_str = 'PA++++'
+        else:
+            pa_str = 'PA+'
+
         result.append({
             'type': 'sunscreen',
-            'PA': rec[2],
+            'PA': pa_str,
             'desc': rec[3],
             'SPF': rec[4],
             'UVB_percentage': rec[5],
@@ -428,7 +440,8 @@ def all_protectors():
     result['umbrella_clothes'] = temp
     
     return str(result)
-    
+
+
 # The main API application 
 if __name__ == '__main__':
     app.run()
