@@ -7,9 +7,9 @@ import mysql.connector
 import random
 
 
-# ------------------------------
-# Define the auxiliary functions
-# ------------------------------
+# ------------------------------------------------------------------------------
+# ----------------------- Define the auxiliary functions -----------------------
+# ------------------------------------------------------------------------------
 
 # STATIC variables
 OPENUV_URL_RECENT = "https://api.openuv.io/api/v1/uv"
@@ -22,7 +22,8 @@ def get_api_key():
     for l in lines:
         all_keys.append(str(l).rstrip())
     return random.choice(all_keys)
-        
+
+
 # This function return a connection to the database
 def connect_to_db():
     # Get azure authentication
@@ -46,6 +47,7 @@ def connect_to_db():
         database=db_info['db_name']
     )
 
+
 # This function find the given suburb info from the database
 def find_coordinate(postcode):
     db_connection = connect_to_db()
@@ -66,15 +68,16 @@ def find_coordinate(postcode):
     # If invalid post code then return default result
     except Exception:
         coord = {
-            'lat': '0',
-            'lng': '0'
+            'lat': '-37.817403',
+            'lng': '144.956776'
         }
         suburb_info = {
-            'postcode': '0',
-            'name': 'Default data'
+            'postcode': '3000',
+            'name': 'Default postcode: 3000'
         }
     finally:
         return [coord, suburb_info]
+
 
 # Define the function to evaluate the UVR
 def evaluate_uvr(uvr):
@@ -90,15 +93,18 @@ def evaluate_uvr(uvr):
         return 'extremely high'
 
 
-# -------------------------
-# Create the API aplication
-# -------------------------
+# -----------------------------------------------------------------------
+# ------------------------ Create the Aplication ------------------------
+# -----------------------------------------------------------------------
 app = Flask(__name__)
 
 
-# -----------------
-# Generate the APIs
-# -----------------
+# -------------------------------------------------------------------------------
+# ------------------------------ Generate the APIs ------------------------------
+# -------------------------------------------------------------------------------
+
+
+# ------------------------------------- ITERATION 1 -------------------------------------
 
 # API to get current UVR for a specific location (Iteration 1)
 @app.route('/uvr_location')
@@ -123,7 +129,8 @@ def uvr_location():
     }
     return str(result)
 
-# API to get current UVR for 18 most crowded suburbs in Melbourne
+
+# API to get current UVR for 18 most crowded suburbs in Melbourne (Iteration 1)
 @app.route('/uvr_inner_suburbs')
 def uvr_inner_suburbs():
     # 18 most crowded suburbs in Melbourne
@@ -177,6 +184,7 @@ def uv_by_month():
         })
     return str(result)
 
+
 # API to get historical UVR group by Years (Iteration 1)
 @app.route('/uvr_by_year')
 def uvr_by_year():
@@ -199,7 +207,8 @@ def uvr_by_year():
         })
     return str(result)
 
-# API to get protectors based on UVR
+
+# API to get protectors based on UVR (Iteration 1)
 @app.route('/uvr_protector')
 def uvr_protector():
 
@@ -285,6 +294,8 @@ def uvr_protector():
 
     return str(result)
 
+
+# API to return 1 single protector (Iteration 1)
 @app.route('/single_protector')
 def single_protector():
 
@@ -355,9 +366,10 @@ def single_protector():
     else:   
         return "Invalid Request"
 
-
     return str(result)
 
+
+#  API to return all protectors (Iteration 1)
 @app.route('/all_protectors')
 def all_protectors():
 
@@ -442,6 +454,179 @@ def all_protectors():
     return str(result)
 
 
-# The main API application 
+
+# ------------------------------------- ITERATION 2 -------------------------------------
+
+# API to get current UVR for a specific location (Iteration 2)
+@app.route('/uvr_location_i2')
+def uvr_location_i2():
+
+    postcode = request.args.get('postcode')
+    
+    # Get coordinates from database
+    PARAMS = find_coordinate(postcode)[0]
+    suburb_info = find_coordinate(postcode)[1]
+
+    # Send API request to OpenUV
+    req = requests.get(url=OPENUV_URL_RECENT, params=PARAMS, headers={"x-access-token": get_api_key()})
+    data = json.loads(req.text)
+    
+    # Compose and return result data
+    result = {
+        'postcode': postcode,
+        'suburb': suburb_info['name'],
+        'UVR': data['result']['uv'],
+        'max_UVR': data['result']['uv_max'],
+        'lat': PARAMS['lat'],
+        'lng': PARAMS['lng']
+    }
+    return str(result)
+
+
+# API to get historical UVR group by Months (Iteration 2)
+@app.route('/uv_by_month_i2')
+def uv_by_month_i2():
+    # Create connection to database
+    db_connection = connect_to_db()
+
+    # Create and execute SQL query
+    db_cursor = db_connection.cursor()
+    db_cursor.execute("SELECT month, AVG(uv_index) AS avg_uv FROM uvr GROUP BY month ORDER BY month ASC")
+    records = db_cursor.fetchall()
+
+    # List of data to return
+    result = []
+
+    # Compose and return result data
+    for rec in records:
+        result.append(rec[1])
+    
+    # Data is a list of Average UVR from [Jan, Feb, Mar,..., Dec]
+    return str(result)
+
+
+# API to get historical UVR group by Years (Iteration 2)
+@app.route('/uv_by_year_i2')
+def uv_by_year_i2():
+    # Create connection to database
+    db_connection = connect_to_db()
+
+    # Create and execute SQL query
+    db_cursor = db_connection.cursor()
+    db_cursor.execute("SELECT year, AVG(uv_index) AS avg_uv FROM uvr GROUP BY year ORDER BY year ASC")
+    records = db_cursor.fetchall()
+
+    # List of data to return
+    result = []
+
+    # Compose and return result data
+    for rec in records:
+        result.append(rec[1])
+
+    # Data is a list of Average UVR from [2010, 2011, 2012,..., 2020]
+    return str(result)
+
+
+# API to get hospitals by postcode (Iteration 2)
+@app.route('/nearby_hospitals_i2')
+def nearby_hospitals_i2():
+
+    postcode = request.args.get('postcode')
+    result = []
+    
+    # Query data from DB
+    db_connection = connect_to_db()
+
+    # Create and execute SQL query
+    db_cursor = db_connection.cursor()
+
+    # If the postcode is valid then return hospitals nearby
+    try:
+        # Find the hospitals
+        db_cursor.execute("SELECT * FROM hospitals WHERE Postcode="+postcode)
+        records = db_cursor.fetchall()
+        
+        # Compose result data
+        for rec in records:
+            result.append({
+                'name': rec[1],
+                'phone': rec[2],
+                'address': rec[3],
+                'suburb': rec[4],
+                'postcode': rec[5],
+                'state': rec[6],
+                'sector': rec[7],
+                'lat': rec[8],
+                'lng': rec[9]
+            })
+    # If the postcode is invalid then return default hospital
+    except Exception:
+        result.append({
+                'name': "Default hospital for invalid postcode: Royal Melbourne Hospital [Parkville]",
+                'phone': "03 9342 7000",
+                'address': '300 Grattan Street',
+                'suburb': 'Parkville',
+                'postcode': 3050,
+                'state': 'Vic',
+                'sector': 'Public',
+                'lat': -37.799259,
+                'lng': 144.956864
+            })
+    finally:
+        if len(records)==0:
+            result.append({
+                'name': "Default hospital for invalid postcode: Royal Melbourne Hospital [Parkville]",
+                'phone': "03 9342 7000",
+                'address': '300 Grattan Street',
+                'suburb': 'Parkville',
+                'postcode': 3050,
+                'state': 'Vic',
+                'sector': 'Public',
+                'lat': -37.799259,
+                'lng': 144.956864
+            })
+
+        return str(result)
+
+    
+# API to get quizzes (Iteration 2)
+@app.route('/quiz_i2')
+def quiz_i2():
+    all_topics = ['Eye_dmg', 'Skin_dmg', 'Sunscreen', 'Sunglasses', 'Hat', 'Cloth', 'UVR']
+    
+    result = []
+
+    # Query data from DB
+    db_connection = connect_to_db()
+
+    # Create and execute SQL query
+    db_cursor = db_connection.cursor()
+
+    # Get 1 random question for each topic
+    for topic in all_topics:
+        db_cursor.execute("SELECT * FROM quiz WHERE Topic='{}' ORDER BY RAND() LIMIT 1".format(topic))
+        records = db_cursor.fetchall()
+
+        # Compose the result
+        for rec in records:
+            result.append({
+                'topic': rec[1],
+                'question': rec[2],
+                'answer': rec[3],
+                'explanation': rec[4],
+                'selection_1': rec[5],
+                'selection_2': rec[6]
+            })
+
+    # Return the result
+    return str(result)
+
+
+# ------------------------------------- ITERATION 3 -------------------------------------
+# (Comming soon)
+
+# --------------------------------------------------------------------------------------
+# --------------------------- Start the main API application ---------------------------
+# --------------------------------------------------------------------------------------
 if __name__ == '__main__':
     app.run()
