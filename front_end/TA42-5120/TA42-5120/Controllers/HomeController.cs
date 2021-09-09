@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -83,8 +84,8 @@ namespace TA42_5120.Controllers
                
             }
 
-            /*About uvr to clothes*/
-            /*string data1 = "[{'type': 'hat', 'hat_type': 'Not needed', 'forehead': 0, 'cheek': 0, 'nose': 0, 'ear': 0, 'chin': 0, 'neck': 0}, {'type': 'sunglasses', 'lens_category': 0, 'function': 'Fashion spectacles', 'situation': 'Against wind, dust or debris, but not against sun', 'glare': 'not against sun'}, {'type': 'sunscreen', 'PA': 1, 'desc': 'Some UVA protection', 'SPF': 4, 'UVB_percentage': 75.0, 'situation': None}, {'type': 'umbrella_clothes', 'UPF': '0 to 10', 'UVB_percentage': '>10.1'}]";
+            //About uvr to clothes
+            string data1 = "[{'type': 'hat', 'hat_type': 'Not needed', 'forehead': 0, 'cheek': 0, 'nose': 0, 'ear': 0, 'chin': 0, 'neck': 0}, {'type': 'sunglasses', 'lens_category': 0, 'function': 'Fashion spectacles', 'situation': 'Against wind, dust or debris, but not against sun', 'glare': 'not against sun'}, {'type': 'sunscreen', 'PA': 1, 'desc': 'Some UVA protection', 'SPF': 4, 'UVB_percentage': 75.0, 'situation': None}, {'type': 'umbrella_clothes', 'UPF': '0 to 10', 'UVB_percentage': '>10.1'}]";
             data1 = data1.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
             string[] sepa = { ", {" };
 
@@ -148,7 +149,7 @@ namespace TA42_5120.Controllers
         {
             ViewBag.Title = "UV Data";
             string uvr1 = null;
-            /***receive postcode from user input and show uvr information. Source codes come from: http://www.codeproject.com/Questions/204778/Get-HTML-code-from-a-website-C ***/
+            //receive postcode from user input and show uvr information. Source codes come from: http://www.codeproject.com/Questions/204778/Get-HTML-code-from-a-website-C 
             string urlAddress = "https://lemonumbrella.azurewebsites.net/uvr_location?postcode=" + su;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -164,7 +165,7 @@ namespace TA42_5120.Controllers
                 response.Close();
                 readStream.Close();
 
-                /***This is what we extract sururb, UVR and max UVR***/
+                //This is what we extract sururb, UVR and max UVR
                 //One data sample is: {'postcode': '123400', 'suburb': 'Default data', 'UVR': 2.3949, 'max_UVR': 13.2506}
                 string[] split = data.Split(',');
                 List<string> data1 = new List<string>();
@@ -197,61 +198,113 @@ namespace TA42_5120.Controllers
                     response1.Close();
                     readStream1.Close();
 
-                    /***Extract relative information for protectors***/
-                    //One sample of dataclo: [{'type': 'hat', 'hat_type': 'Not needed', 'forehead': 0, 'cheek': 0, 'nose': 0, 'ear': 0, 'chin': 0, 'neck': 0}, {'type': 'sunglasses', 'lens_category': 0, 'function': 'Fashion spectacles', 'situation': 'Against wind, dust or debris, but not against sun', 'glare': 'not against sun'}, {'type': 'sunscreen', 'PA': 1, 'desc': 'Some UVA protection', 'SPF': 4, 'UVB_percentage': 75.0, 'situation': None}, {'type': 'umbrella_clothes', 'UPF': '0 to 10', 'UVB_percentage': '>10.1'}]
+                    //Extract relative information for protectors
+                    //1. uvr<5 or uvr>10: show 1  hat type; 2. uvr>5 and uvr<=7  4 hat types; 3. uvr>7 and uvr<=10 3 hat types
+
+                    //replace " with \" & remove [,]
+                    dataclo = dataclo.Replace("\"", "\"");
+                    dataclo = dataclo.Replace("\\xa0", "");
+                    dataclo = dataclo.Replace("None", "null");
+
                     dataclo = dataclo.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
-                    string[] sepa = { ", {" };
+                    //it will show only one hat type
+                    if (Convert.ToDouble(uvr1)<=5 || Convert.ToDouble(uvr1)>10) {
+                        List<string> data510 = new List<string>();
+                        Regex regex = new Regex(@"\{(.*?)\}");
+                        //find match
+                        var matches = regex.Matches(dataclo);
+                        foreach (Match match in matches)
+                            data510.Add(match.Groups[0].ToString());
+                        string hat = "";
+                        string len = "";
+                        string spf = "";
+                        string upf = "";
+                        for (int i = 0; i < 4; i++)
+                        {
+                            string qq = data510[i];
+                            JObject json1 = JObject.Parse(qq);
+                            string dd = Convert.ToString(json1["hat_type"]);
+                            hat = hat + dd + "  ";
 
-                    //Extract hat_type information
-                    string hat = dataclo.Split(sepa, System.StringSplitOptions.RemoveEmptyEntries)[0];
-                    hat = hat.TrimStart(new char[] { '{' }).TrimEnd(new char[] { '}' });
-                    string[] hat1 = hat.Split(',');
-                    List<string> hat2 = new List<string>();
-                    for (int i = 0; i < hat1.Length; i++)
-                        hat2.Add(hat1[i].Split(':')[1].TrimStart(new char[] { '\'', ' ' }).TrimEnd(new char[] { '\'' }));
-                    string hatType = hat2[1];
-                    ViewBag.hat = hatType;
+                            len = len + Convert.ToString(json1["lens_category"]);
 
-                    //Extract sunglassed category information
-                    string sunglasses = dataclo.Split(sepa, System.StringSplitOptions.RemoveEmptyEntries)[1];
-                    //test string 
-                    sunglasses = sunglasses.TrimEnd(new char[] { '}' });
-                    List<string> sunglasses2 = new List<string>();
-                    //regular expression
-                    Regex regex = new Regex("\'(.*?)\'|([0-9]{1,})");
-                    //find match
-                    var matches = regex.Matches(sunglasses);
-                    foreach (Match match in matches)
-                        sunglasses2.Add(match.Groups[0].ToString());
-                    string glassca = sunglasses2[3];
-                    ViewBag.sunglasses = glassca;
+                            spf = spf + Convert.ToString(json1["SPF"]);
 
-                    //extract spf information
-                    string suncream = dataclo.Split(sepa, System.StringSplitOptions.RemoveEmptyEntries)[2];
-                    suncream = suncream.TrimEnd(new char[] { '}' });
-                    string[] suncream1 = suncream.Split(':');
-                    List<string> suncream2 = new List<string>();
-                    for (int i = 1; i < suncream1.Length; i++)
-                    {
-                        suncream2.Add(suncream1[i].Split(',')[0].TrimStart(new char[] { '\'', ' ' }).TrimEnd(new char[] { '\'' }));
+                            upf = upf + Convert.ToString(json1["UPF"]);
+                        }
+                        ViewBag.upf = upf;
+                        ViewBag.spf = spf;
+                        ViewBag.len = len;
+                        ViewBag.hat = hat;
+
+                        return View();
                     }
-                    string spf = suncream2[3];
-                    ViewBag.spf = spf;
+                    //it will show 4 hat types
+                    else if (Convert.ToDouble(uvr1) > 5 && Convert.ToDouble(uvr1) <= 7) {
+                        List<string> data57 = new List<string>();
+                        Regex regex = new Regex(@"\{(.*?)\}");
+                        //find match
+                        var matches = regex.Matches(dataclo);
+                        foreach (Match match in matches)
+                            data57.Add(match.Groups[0].ToString());
+                        string hat = "";
+                        string len = "";
+                        string spf = "";
+                        string upf = "";
+                        for (int i = 0; i < 7; i++)
+                        {
+                            string qq = data57[i];
+                            JObject json1 = JObject.Parse(qq);
+                            string dd = Convert.ToString(json1["hat_type"]);
+                            hat = hat + dd + "  ";
 
-                    //extract UPF information
-                    //'type': 'umbrella_clothes', 'UPF': '0 to 10', 'UVB_percentage': '>10.1'}
-                    string cloth = dataclo.Split(sepa, System.StringSplitOptions.RemoveEmptyEntries)[3];
-                    cloth = cloth.TrimEnd(new char[] { '}' });
-                    string[] cloth1 = cloth.Split(':');
-                    List<string> cloth2 = new List<string>();
-                    for (int i = 1; i < cloth1.Length; i++)
-                    {
-                        cloth2.Add(cloth1[i].Split(',')[0].TrimStart(new char[] { '\'', ' ' }).TrimEnd(new char[] { '\'' }));
+                            len = len + Convert.ToString(json1["lens_category"]);
+
+                            spf = spf + Convert.ToString(json1["SPF"]);
+
+                            upf = upf + Convert.ToString(json1["UPF"]);
+                        }
+                        ViewBag.upf = upf;
+                        ViewBag.spf = spf;
+                        ViewBag.len = len;
+                        ViewBag.hat = hat;
+
+                        return View();
                     }
-                    string upf = cloth2[1];
-                    ViewBag.upf = upf;
+                    //it will show 3 hat types
+                    else if (Convert.ToDouble(uvr1) > 7 && Convert.ToDouble(uvr1) <= 10)
+                    {
+                        List<string> data710 = new List<string>();
+                        Regex regex = new Regex(@"\{(.*?)\}");
+                        //find match
+                        var matches = regex.Matches(dataclo);
+                        foreach (Match match in matches)
+                            data710.Add(match.Groups[0].ToString());
+                        string hat = "";
+                        string len = "";
+                        string spf = "";
+                        string upf = "";
+                        for (int i = 0; i < 6; i++)
+                        {
+                            string qq = data710[i];
+                            JObject json1 = JObject.Parse(qq);
+                            string dd = Convert.ToString(json1["hat_type"]);
+                            hat = hat + dd + "  ";
 
-                    return View();
+                            len = len + Convert.ToString(json1["lens_category"]);
+
+                            spf = spf + Convert.ToString(json1["SPF"]);
+
+                            upf = upf + Convert.ToString(json1["UPF"]);
+                        }
+                        ViewBag.upf = upf;
+                        ViewBag.spf = spf;
+                        ViewBag.len = len;
+                        ViewBag.hat = hat;
+
+                        return View();
+                    }
+
                 }
                 return null;
             }
@@ -585,11 +638,10 @@ namespace TA42_5120.Controllers
             return View();*/
         }
 
-        
-
         public ActionResult Trend()
         {
             ViewBag.Title = "UV Trend in Mel";
+
             return View();
         }
 
@@ -611,6 +663,162 @@ namespace TA42_5120.Controllers
             return View();
         }
 
+        public ActionResult Education()
+        {
+            ViewBag.Title = "Quiz";
+
+            string urlAddress = "https://lemonumbrella.azurewebsites.net/quiz_i2";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = null;
+                if (response.CharacterSet == null)
+                    readStream = new StreamReader(receiveStream);
+                else
+                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                string quiz = readStream.ReadToEnd();
+                response.Close();
+                readStream.Close();
+
+                quiz = quiz.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
+                quiz = quiz.Replace("\"","\"");
+                quiz = quiz.Replace("\\n", " ");
+                //Regex to extract every question
+                List<string> question = new List<string>();
+                //regular expression
+                Regex regex = new Regex(@"\{(.*?)\}");
+                //find match
+                var matches = regex.Matches(quiz);
+                foreach (Match match in matches)
+                    question.Add(match.Groups[0].ToString());
+
+                //question for eye damage
+                string eyedamage = question[0];
+                JObject json1 = JObject.Parse(eyedamage);
+                string topic1 = Convert.ToString(json1["topic"]);
+                if (topic1 == "Eye_dmg")
+                {
+                    topic1 = "Eye damage";
+                }
+                string question1 = Convert.ToString(json1["question"]);
+                string answer1 = Convert.ToString(json1["answer"]);
+                string explanation1 = Convert.ToString(json1["explanation"]);
+                string selection11 = Convert.ToString(json1["selection_1"]);
+                string selection12 = Convert.ToString(json1["selection_2"]);
+                ViewBag.topic1 = topic1;
+                ViewBag.question1 = question1;
+                ViewBag.answer1 = answer1;
+                ViewBag.explanation1 = explanation1;
+                ViewBag.selection11 = selection11;
+                ViewBag.selection12 = selection12;
+
+                //question for skin damage
+                string skindamage = question[1];
+                JObject json2 = JObject.Parse(skindamage);
+                string topic2 = Convert.ToString(json2["topic"]);
+                if (topic2 == "Skin_dmg")
+                {
+                    topic2 = "Skin damage";
+                }
+                string question2 = Convert.ToString(json2["question"]);
+                string answer2 = Convert.ToString(json2["answer"]);
+                string explanation2 = Convert.ToString(json2["explanation"]);
+                string selection21 = Convert.ToString(json2["selection_1"]);
+                string selection22 = Convert.ToString(json2["selection_2"]);
+                ViewBag.topic2 = topic2;
+                ViewBag.question2 = question2;
+                ViewBag.answer2 = answer2;
+                ViewBag.explanation2 = explanation2;
+                ViewBag.selection21 = selection21;
+                ViewBag.selection22 = selection22;
+
+                //question for sunscreen
+                string sunscreen = question[2];
+                JObject json3 = JObject.Parse(sunscreen);
+                string topic3 = Convert.ToString(json3["topic"]);
+                string question3 = Convert.ToString(json3["question"]);
+                string answer3 = Convert.ToString(json3["answer"]);
+                string explanation3 = Convert.ToString(json3["explanation"]);
+                string selection31 = Convert.ToString(json3["selection_1"]);
+                string selection32 = Convert.ToString(json3["selection_2"]);
+                ViewBag.topic3 = topic3;
+                ViewBag.question3 = question3;
+                ViewBag.answer3 = answer3;
+                ViewBag.explanation3 = explanation3;
+                ViewBag.selection31 = selection31;
+                ViewBag.selection32 = selection32;
+
+                //question for sunglasses
+                string sunglasses = question[3];
+                JObject json4 = JObject.Parse(sunglasses);
+                string topic4 = Convert.ToString(json4["topic"]);
+                string question4 = Convert.ToString(json4["question"]);
+                string answer4 = Convert.ToString(json4["answer"]);
+                string explanation4 = Convert.ToString(json4["explanation"]);
+                string selection41 = Convert.ToString(json4["selection_1"]);
+                string selection42 = Convert.ToString(json4["selection_2"]);
+                ViewBag.topic4 = topic4;
+                ViewBag.question4 = question4;
+                ViewBag.answer4 = answer4;
+                ViewBag.explanation4 = explanation4;
+                ViewBag.selection41 = selection41;
+                ViewBag.selection42 = selection42;
+
+                //question for hat
+                string hat = question[4];
+                JObject json5 = JObject.Parse(hat);
+                string topic5 = Convert.ToString(json5["topic"]);
+                string question5 = Convert.ToString(json5["question"]);
+                string answer5 = Convert.ToString(json5["answer"]);
+                string explanation5 = Convert.ToString(json5["explanation"]);
+                string selection51 = Convert.ToString(json5["selection_1"]);
+                string selection52 = Convert.ToString(json5["selection_2"]);
+                ViewBag.topic5 = topic5;
+                ViewBag.question5 = question5;
+                ViewBag.answer5 = answer5;
+                ViewBag.explanation5 = explanation5;
+                ViewBag.selection51 = selection51;
+                ViewBag.selection52 = selection52;
+
+                //question for cloth
+                string cloth = question[5];
+                JObject json6 = JObject.Parse(cloth);
+                string topic6 = Convert.ToString(json6["topic"]);
+                string question6 = Convert.ToString(json6["question"]);
+                string answer6 = Convert.ToString(json6["answer"]);
+                string explanation6 = Convert.ToString(json6["explanation"]);
+                string selection61 = Convert.ToString(json6["selection_1"]);
+                string selection62 = Convert.ToString(json6["selection_2"]);
+                ViewBag.topic6 = topic6;
+                ViewBag.question6 = question6;
+                ViewBag.answer6 = answer6;
+                ViewBag.explanation6 = explanation6;
+                ViewBag.selection61 = selection61;
+                ViewBag.selection62 = selection62;
+
+                //question for UVR
+                string uvrQ = question[6];
+                JObject json7 = JObject.Parse(uvrQ);
+                string topic7 = Convert.ToString(json7["topic"]);
+                string question7 = Convert.ToString(json7["question"]);
+                string answer7 = Convert.ToString(json7["answer"]);
+                string explanation7 = Convert.ToString(json7["explanation"]);
+                string selection71 = Convert.ToString(json7["selection_1"]);
+                string selection72 = Convert.ToString(json7["selection_2"]);
+                ViewBag.topic7 = topic7;
+                ViewBag.question7 = question7;
+                ViewBag.answer7 = answer7;
+                ViewBag.explanation7 = explanation7;
+                ViewBag.selection71 = selection71;
+                ViewBag.selection72 = selection72;
+
+                return View();
+            }
+            return null;
+        }
+
         public ActionResult Cloth()
         {
             ViewBag.Title = "Cloth";
@@ -620,6 +828,62 @@ namespace TA42_5120.Controllers
         public ActionResult Hat()
         {
             ViewBag.Title = "Hat";
+            return View();
+        }
+
+        public ActionResult DamTre() {
+            ViewBag.Title = "Damage and Treament";
+            return View();
+        }
+
+        public ActionResult NewSkinDmg()
+        {
+            ViewBag.Title = "Damage to skin";
+            return View();
+        }
+
+        public ActionResult Eyedamage()
+        {
+            ViewBag.Title = "Damage to eyes";
+            return View();
+        }
+
+        public ActionResult Skindamage()
+        {
+            ViewBag.Title = "Sunburn damage";
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Treatment(string aaa)
+        {
+            ViewBag.Title = "Sunburn's treatment";
+            string urlAddress = "https://lemonumbrella.azurewebsites.net/nearby_hospitals_i2?postcode=" + aaa;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = null;
+                if (response.CharacterSet == null)
+                    readStream = new StreamReader(receiveStream);
+                else
+                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                string data = readStream.ReadToEnd();
+                response.Close();
+                readStream.Close();
+                ViewBag.Markers = data;
+
+                return View();
+            }
+            return null;
+
+        }
+
+        [HttpGet]
+        public ActionResult Treatment()
+        {
+            ViewBag.Title = "Sunburn's treatment";
             return View();
         }
     }

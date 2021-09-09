@@ -29,8 +29,6 @@
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
 
-
-
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -59,9 +57,14 @@
                     <li class="nav-item">
                         <a class="nav-link px-lg-3 py-3 py-lg-4" href="@Url.Action("SuburbUV","Home")">Suburb UV</a>
                     </li>
-                   
                     <li class="nav-item">
                         <a class="nav-link px-lg-3 py-3 py-lg-4" href="@Url.Action("Protector","Home")">Protector</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" href="@Url.Action("DamTre","Home")">Damage & Treatment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-lg-3 py-3 py-lg-4" href="@Url.Action("Education","Home")">Quiz</a>
                     </li>
                 </ul>
             </div>
@@ -71,7 +74,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Umbrella - FIT5120 TA42</p>
+            <p>@DateTime.Now.Year - Umbrella - FIT5120 TA42</p>
         </footer>
     </div>
 
