@@ -573,7 +573,7 @@ def nearby_hospitals_i2():
                 'lng': 144.956864
             })
     finally:
-        if len(records)==0:
+        if len(result)==0:
             result.append({
                 'name': "Default hospital for invalid postcode: Royal Melbourne Hospital [Parkville]",
                 'phone': "03 9342 7000",
