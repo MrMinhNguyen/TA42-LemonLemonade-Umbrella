@@ -5,6 +5,8 @@ import requests
 import json
 import mysql.connector
 import random
+from dateutil import parser
+import pandas as pd
 
 
 # ------------------------------------------------------------------------------
@@ -13,11 +15,25 @@ import random
 
 # STATIC variables
 OPENUV_URL_RECENT = "https://api.openuv.io/api/v1/uv"
+OPENUV_URL_FORECAST = "https://api.openuv.io/api/v1/forecast"
+ACCUWEATHER_URL_GEO_SEARCH = "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search"
+ACCUWEATHER_URL_FORECAST = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/{key}"
+ACCUWEATHER_URL_INDICES = "http://dataservice.accuweather.com/indices/v1/daily/5day/{key}/groups/11"
 
-# This function reads the text file contains the API keys and randomly return 1 of them
+
+# This function reads the text file contains the OpenUV API keys and randomly return 1 of them
 def get_api_key():
     all_keys = []
     f = open('open_uv_api_keys.txt', 'r')
+    lines = f.readlines()
+    for l in lines:
+        all_keys.append(str(l).rstrip())
+    return random.choice(all_keys)
+
+# This function reads the text file contains the AccuWeather API keys and randomly return 1 of them
+def get_api_key_i3():
+    all_keys = []
+    f = open('accu_weather_api_keys.txt', 'r')
     lines = f.readlines()
     for l in lines:
         all_keys.append(str(l).rstrip())
@@ -91,6 +107,39 @@ def evaluate_uvr(uvr):
         return 'high'
     else:
         return 'extremely high'
+
+# Get the content for activity by its ID
+def get_activity_name(id):
+    if id == 1:
+        return "running"
+    elif id == 2:
+        return "jogging"
+    elif id == 3:
+        return "hiking"
+    elif id == 4:
+        return "bicycling"
+    elif id == 5:
+        return "golf"
+    elif id == 6:
+        return "tennis"
+    elif id == 7:
+        return "skateboarding"
+    elif id == 8:
+        return "ourdoor_concert"
+    elif id == 9:
+        return "kite_flying"
+    elif id == 10:
+        return "swimming"
+    elif id == 11:
+        return "sailing"
+    elif id == 13:
+        return "fishing"
+    elif id == 15:
+        return "skiing"
+    elif id == 24:
+        return "bbq"
+    else:
+        return "lawn_mowing"
 
 
 # -----------------------------------------------------------------------
@@ -623,7 +672,75 @@ def quiz_i2():
 
 
 # ------------------------------------- ITERATION 3 -------------------------------------
-# (Comming soon)
+# API to get next 5 days (Iteration 3)
+@app.route('/next_5days_i3')
+def next_5days_i3():
+    postcode = request.args.get('postcode')
+    coord = find_coordinate(postcode)[0]
+    lat = coord['lat']
+    lng = coord['lng']
+
+    # Request parameters
+    PARAMS_1 = {
+        "apikey": get_api_key_i3(),
+        "q": str(lat) + "," + str(lng),
+        "details": "true"
+    }
+    # Send API request to AccuWeather to convert lat and lng to location key
+    req_1 = requests.get(url=ACCUWEATHER_URL_GEO_SEARCH, params=PARAMS_1)
+    location_key = json.loads(req_1.text)["Key"]
+    
+    # Request parameters
+    PARAMS_2 = {
+        "apikey": get_api_key_i3(),
+        "details": "true",
+        "metric": "true"        
+    }
+    # Send API request to AccuWeather to get 5days forecast
+    req_2 = requests.get(url=ACCUWEATHER_URL_FORECAST.format(key=location_key), params=PARAMS_2)
+    data_2 = json.loads(req_2.text)
+    new_data_2 = list()
+    for day in data_2["DailyForecasts"]:
+        new_data_2.append({
+            "date": str(parser.parse(day["Date"]).date()),
+            "max_uvr": day["AirAndPollen"][-1]["Value"]
+        })
+
+    # Request parameters
+    PARAMS_3 = {
+        "apikey": get_api_key_i3(),
+        "details": "true"  
+    }
+    # Send API request to AccuWeather to get activities
+    req_3 = requests.get(url=ACCUWEATHER_URL_INDICES.format(key=location_key), params=PARAMS_3)
+    data_3 = json.loads(req_3.text)
+    new_data_3 = list()
+    id_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 24, 28]
+    for d in data_3:
+        if d["ID"] in id_list:
+            new_data_3.append({
+                "date": str(parser.parse(d["LocalDateTime"]).date()),
+                "activity": get_activity_name(d["ID"]),
+                "rating": d["Category"]
+            })
+
+    # Composing the result
+    df_2 = pd.DataFrame(new_data_2)
+    df_3 = pd.DataFrame(new_data_3)
+    df = pd.merge(df_2, df_3, on="date")
+    df = df.pivot(index=["date", "max_uvr"], columns="activity", values="rating")
+    df.reset_index(level=0, inplace=True)
+
+    return str(df.to_dict('records'))
+
+
+# # API to get next schedule for 1 chosen day (Iteration 3)
+# @app.route('/forecast_1day_i3')
+# def forecast_1day_i3():
+#     day = request.args.get('day')
+#     OPENUV_URL_FORECAST
+
+#     return day
 
 # --------------------------------------------------------------------------------------
 # --------------------------- Start the main API application ---------------------------
