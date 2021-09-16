@@ -7,6 +7,7 @@ import mysql.connector
 import random
 from dateutil import parser
 import pandas as pd
+import datetime
 
 
 # ------------------------------------------------------------------------------
@@ -91,6 +92,7 @@ def find_coordinate(postcode):
             'postcode': '3000',
             'name': 'Default postcode: 3000'
         }
+    # Always return data instead of error
     finally:
         return [coord, suburb_info]
 
@@ -142,6 +144,18 @@ def get_activity_name(id):
         return "lawn_mowing"
 
 
+# Function to rcheck recommended activities, type=0: excellent_activities, type=1: poor_activities
+def check_activites(list_of_activities):
+    if len(list_of_activities)==0:
+        return ["Stay Home"]
+    else:
+        return list_of_activities
+
+def convert_date(date_type):
+    str_type = str(date_type)
+    return str(parser.parse(str_type).date())
+
+
 # -----------------------------------------------------------------------
 # ------------------------ Create the Aplication ------------------------
 # -----------------------------------------------------------------------
@@ -165,18 +179,33 @@ def uvr_location():
     PARAMS = find_coordinate(postcode)[0]
     suburb_info = find_coordinate(postcode)[1]
 
-    # Send API request to OpenUV
-    req = requests.get(url=OPENUV_URL_RECENT, params=PARAMS, headers={"x-access-token": get_api_key()})
-    data = json.loads(req.text)
+    # Get the data
+    try:
+        # Send API request to OpenUV
+        req = requests.get(url=OPENUV_URL_RECENT, params=PARAMS, headers={"x-access-token": get_api_key()})
+        data = json.loads(req.text)
+        
+        # Compose and return result data
+        result = {
+            'postcode': postcode,
+            'suburb': suburb_info['name'],
+            'UVR': data['result']['uv'],
+            'max_UVR': data['result']['uv_max']
+        }
+    # Return default data if error occurs
+    except Exception:
+        # Compose and return result data
+        result = {
+            'postcode': postcode,
+            'suburb': suburb_info['name'],
+            'UVR': 0,
+            'max_UVR': 6
+        }
+    # Always return data instead of error
+    finally:
+        return str(result)
     
-    # Compose and return result data
-    result = {
-        'postcode': postcode,
-        'suburb': suburb_info['name'],
-        'UVR': data['result']['uv'],
-        'max_UVR': data['result']['uv_max']
-    }
-    return str(result)
+
 
 
 # API to get current UVR for 18 most crowded suburbs in Melbourne (Iteration 1)
@@ -186,28 +215,53 @@ def uvr_inner_suburbs():
     INNER_SUBURBS = ['3000', '3121', '3182', '3056', '3141', '3051', 
                     '3181', '3053', '3006', '3183', '3207', '3184', 
                     '3068', '3057', '3031', '3065', '3162', '3168']
+    # Get the data
+    try:
+        # List of data to return
+        result = list()
 
-    # List of data to return
-    result=[]
-
-    # Get data for each postcode
-    for postcode in INNER_SUBURBS:
-        # Get coordinates from database
-        PARAMS = find_coordinate(postcode)[0]
-        suburb_info = find_coordinate(postcode)[1]
-        
-        # Send API request to OpenUV
-        req = requests.get(url=OPENUV_URL_RECENT, params=PARAMS, headers={"x-access-token": get_api_key()})
-        data = json.loads(req.text)
-        
-        # Compose result data
-        result.append({
-            'postcode': postcode,
-            'suburb': suburb_info['name'],
-            'UVR': data['result']['uv'],
-            'max_UVR': data['result']['uv_max']
-        })
-    return str(result)
+        # Get data for each postcode
+        for postcode in INNER_SUBURBS:
+            # Get coordinates from database
+            PARAMS = find_coordinate(postcode)[0]
+            suburb_info = find_coordinate(postcode)[1]
+            
+            # Send API request to OpenUV
+            req = requests.get(url=OPENUV_URL_RECENT, params=PARAMS, headers={"x-access-token": get_api_key()})
+            data = json.loads(req.text)
+            
+            # Compose result data
+            result.append({
+                'postcode': postcode,
+                'suburb': suburb_info['name'],
+                'UVR': data['result']['uv'],
+                'max_UVR': data['result']['uv_max']
+            })
+    # Return defalut data if error occurs
+    except Exception:
+        result = [
+            { 'postcode': '3000', 'suburb': 'MELBOURNE', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3121', 'suburb': 'BURNLEY', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3182', 'suburb': 'ST KILDA', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3056', 'suburb': 'BRUNSWICK', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3141', 'suburb': 'CHAPEL STREET NORTH', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3051', 'suburb': 'HOTHAM HILL', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3181', 'suburb': 'PRAHRAN', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3053', 'suburb': 'CARLTON', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3006', 'suburb': 'SOUTH WHARF', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3183', 'suburb': 'BALACLAVA', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3207', 'suburb': 'GARDEN CITY', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3184', 'suburb': 'BRIGHTON ROAD', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3068', 'suburb': 'CLIFTON HILL', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3057', 'suburb': 'BRUNSWICK EAST', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3031', 'suburb': 'FLEMINGTON', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3065', 'suburb': 'FITZROY', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3162', 'suburb': 'CAULFIELD', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3168', 'suburb': 'CLAYTON', 'UVR': 0, 'max_UVR': 6 }
+        ]
+    # Always return data instead of error
+    finally:
+        return str(result)
 
 
 # API to get historical UVR group by Months (Iteration 1)
@@ -621,6 +675,7 @@ def nearby_hospitals_i2():
                 'lat': -37.799259,
                 'lng': 144.956864
             })
+    # Always return data instead of error
     finally:
         if len(result)==0:
             result.append({
@@ -675,64 +730,102 @@ def quiz_i2():
 # API to get next 5 days (Iteration 3)
 @app.route('/next_5days_i3')
 def next_5days_i3():
+    # Get postcode from URL and get its info from db
     postcode = request.args.get('postcode')
     coord = find_coordinate(postcode)[0]
+    suburb_name = find_coordinate(postcode)[1]["name"]
     lat = coord['lat']
     lng = coord['lng']
 
-    # Request parameters
-    PARAMS_1 = {
-        "apikey": get_api_key_i3(),
-        "q": str(lat) + "," + str(lng),
-        "details": "true"
-    }
-    # Send API request to AccuWeather to convert lat and lng to location key
-    req_1 = requests.get(url=ACCUWEATHER_URL_GEO_SEARCH, params=PARAMS_1)
-    location_key = json.loads(req_1.text)["Key"]
-    
-    # Request parameters
-    PARAMS_2 = {
-        "apikey": get_api_key_i3(),
-        "details": "true",
-        "metric": "true"        
-    }
-    # Send API request to AccuWeather to get 5days forecast
-    req_2 = requests.get(url=ACCUWEATHER_URL_FORECAST.format(key=location_key), params=PARAMS_2)
-    data_2 = json.loads(req_2.text)
-    new_data_2 = list()
-    for day in data_2["DailyForecasts"]:
-        new_data_2.append({
-            "date": str(parser.parse(day["Date"]).date()),
-            "max_uvr": day["AirAndPollen"][-1]["Value"]
-        })
-
-    # Request parameters
-    PARAMS_3 = {
-        "apikey": get_api_key_i3(),
-        "details": "true"  
-    }
-    # Send API request to AccuWeather to get activities
-    req_3 = requests.get(url=ACCUWEATHER_URL_INDICES.format(key=location_key), params=PARAMS_3)
-    data_3 = json.loads(req_3.text)
-    new_data_3 = list()
-    id_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 24, 28]
-    for d in data_3:
-        if d["ID"] in id_list:
-            new_data_3.append({
-                "date": str(parser.parse(d["LocalDateTime"]).date()),
-                "activity": get_activity_name(d["ID"]),
-                "rating": d["Category"]
+    # Get the data
+    try:
+        # Request parameters 1
+        PARAMS_1 = {
+            "apikey": get_api_key_i3(),
+            "q": str(lat) + "," + str(lng),
+            "details": "true"
+        }
+        # Send API request to AccuWeather to convert lat and lng to location key
+        req_1 = requests.get(url=ACCUWEATHER_URL_GEO_SEARCH, params=PARAMS_1)
+        location_key = json.loads(req_1.text)["Key"]
+        
+        # Request parameters 2
+        PARAMS_2 = {
+            "apikey": get_api_key_i3(),
+            "details": "true",
+            "metric": "true"        
+        }
+        # Send API request to AccuWeather to get 5days forecast
+        req_2 = requests.get(url=ACCUWEATHER_URL_FORECAST.format(key=location_key), params=PARAMS_2)
+        data_2 = json.loads(req_2.text)
+        new_data_2 = list()
+        for day in data_2["DailyForecasts"]:
+            new_data_2.append({
+                "date": convert_date(day["Date"]),
+                "max_uvr": day["AirAndPollen"][-1]["Value"]
             })
 
-    # Composing the result
-    df_2 = pd.DataFrame(new_data_2)
-    df_3 = pd.DataFrame(new_data_3)
-    df = pd.merge(df_2, df_3, on="date")
-    df = df.pivot(index=["date", "max_uvr"], columns="activity", values="rating")
-    df.reset_index(level=0, inplace=True)
+        # Request parameters 3
+        PARAMS_3 = {
+            "apikey": get_api_key_i3(),
+            "details": "true"  
+        }
+        # Send API request to AccuWeather to get activities
+        req_3 = requests.get(url=ACCUWEATHER_URL_INDICES.format(key=location_key), params=PARAMS_3)
+        data_3 = json.loads(req_3.text)
+        new_data_3 = list()
+        # Only get some specific activites
+        id_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 24, 28]
+        for d in data_3:
+            if d["ID"] in id_list:
+                new_data_3.append({
+                    "date": convert_date(d["LocalDateTime"]),
+                    "activity": get_activity_name(d["ID"]),
+                    "rating": d["Category"]
+                })
 
-    return str(df.to_dict('records'))
+        # Composing the result by joining the two pieces of data
+        df_2 = pd.DataFrame(new_data_2)
+        df_3 = pd.DataFrame(new_data_3)
+        df = pd.merge(df_2, df_3, on="date")
+        df = df.pivot(index=["date", "max_uvr"], columns="activity", values="rating")
+        df.reset_index(inplace=True)
 
+        # Filter out activites to recommend/not-recommend
+        raw_result = df.to_dict('records')
+        for dt in raw_result:
+            dt["excellent_activites"] = [act for act in dt.keys() if (act!="date" and dt[act] in ["Excellent", "Very Good"])]
+            dt["poor_activites"] = [act for act in dt.keys() if (act!="date" and dt[act] in ["Poor"])]
+        # Compose result data
+        result = [
+            {
+                "suburb": suburb_name,
+                "date": di["date"],
+                "max_uvr": di["max_uvr"],
+                "excellent_activites": check_activites(di["excellent_activites"]),
+                "poor_activites": check_activites(di["poor_activites"]),
+            } 
+            for di in raw_result
+        ]
+        # Clean up memory
+        raw_result = None
+
+    # If error occurs then return default data
+    except Exception:
+        result = list()
+        to_day = datetime.datetime.today()
+        for d in range(0, 5):
+            result.append({
+                "suburb": suburb_name,
+                "date": convert_date(to_day + datetime.timedelta(days=d)),
+                "max_uvr": "Unkown",
+                "excellent_activites": ["Stay Home"],
+                "poor_activites": ["Go Out"],
+            })
+    # Always return data instead of error
+    finally:
+        return str(result)
+    
 
 # # API to get next schedule for 1 chosen day (Iteration 3)
 # @app.route('/forecast_1day_i3')
