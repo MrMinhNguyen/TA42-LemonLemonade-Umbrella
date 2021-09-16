@@ -869,7 +869,7 @@ def forecast_1day_i3():
         ]
         get_item = operator.itemgetter("uvr")
         intervals = [ list(g) for _,g in itertools.groupby(raw_result, get_item) ]
-        intervals = [ itv for itv in intervals if (len(itv)>1 and itv[0]["uvr"]!="H") ]
+        intervals = [ itv for itv in intervals if itv[0]["uvr"]!="H" ]
 
         result = {
             "suburb": suburb_info["name"],
