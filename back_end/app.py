@@ -8,6 +8,8 @@ import random
 from dateutil import parser
 import pandas as pd
 import datetime
+import itertools
+import operator
 
 
 # ------------------------------------------------------------------------------
@@ -151,11 +153,25 @@ def check_activites(list_of_activities):
     else:
         return list_of_activities
 
+# Function to convert datetime to string
 def convert_date(date_type):
     str_type = str(date_type)
     return str(parser.parse(str_type).date())
 
+# Function to convert UTC to AUS time
+def convert_to_AUS(utc_date):
+    aus_time = parser.parse(utc_date) + datetime.timedelta(hours=10)
+    aus_time = str(aus_time.time().hour) + ":" + str(aus_time.time().minute)
+    return aus_time
 
+# Function to evaluate UVR to get Low and Medium periods of the day
+def evaluate_uvr_i3(uvr):
+    if uvr < 3:
+        return "L"
+    elif (uvr >= 3 and uvr < 6):
+        return "M"
+    else:
+        return "H"
 # -----------------------------------------------------------------------
 # ------------------------ Create the Aplication ------------------------
 # -----------------------------------------------------------------------
@@ -827,13 +843,54 @@ def next_5days_i3():
         return str(result)
     
 
-# # API to get next schedule for 1 chosen day (Iteration 3)
-# @app.route('/forecast_1day_i3')
-# def forecast_1day_i3():
-#     day = request.args.get('day')
-#     OPENUV_URL_FORECAST
+# API to get next schedule for 1 chosen day (Iteration 3)
+@app.route('/forecast_1day_i3')
+def forecast_1day_i3():
+    day = request.args.get('day')
+    postcode = request.args.get('postcode')
+    
+    # Get coordinates from database
+    PARAMS = find_coordinate(postcode)[0]
+    PARAMS["dt"] = str(day + "T00:00:00.000Z")
+    suburb_info = find_coordinate(postcode)[1]
+    
+    # Get data
+    try:
+        # Send API request to AccuWeather to get activities
+        req = requests.get(url=OPENUV_URL_FORECAST, params=PARAMS, headers={"x-access-token": get_api_key()})
+        data = json.loads(req.text)["result"]
 
-#     return day
+        raw_result = [
+            {
+                "uvr": evaluate_uvr_i3(rd["uv"]),
+                "timestamp": convert_to_AUS(rd["uv_time"])
+            } 
+            for rd in data
+        ]
+        get_item = operator.itemgetter("uvr")
+        intervals = [ list(g) for _,g in itertools.groupby(raw_result, get_item) ]
+        intervals = [ itv for itv in intervals if (len(itv)>1 and itv[0]["uvr"]!="H") ]
+
+        result = {
+            "suburb": suburb_info["name"],
+            "low_uv": list(),
+            "moderate_uv": list()
+        }
+        for itv in intervals:
+            if itv[0]["uvr"] == "L":
+                result["low_uv"].append("From " + str(itv[0]["timestamp"]) + " To " + str(itv[-1]["timestamp"]))
+            else: 
+                result["moderate_uv"].append("From " + str(itv[0]["timestamp"]) + " To " + str(itv[-1]["timestamp"]))
+    # If error occurs then return default data
+    except Exception:
+        result = {
+            "suburb": suburb_info["name"],
+            "low_uv": list(),
+            "moderate_uv": list()
+        }
+    # Always return data instead of error
+    finally: 
+        return str(result)
 
 # --------------------------------------------------------------------------------------
 # --------------------------- Start the main API application ---------------------------
