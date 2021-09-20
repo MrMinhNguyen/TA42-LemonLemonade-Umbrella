@@ -29,7 +29,6 @@
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
     <style>
-
         body {
             font-size: 20px;
             font-family: 'Work Sans', sans-serif;
@@ -155,7 +154,7 @@
 
     <div class="container">
         <div class="row d-flex justify-content-center mt-5">
-            <div class="col-12">
+            <div class="col-9">
                 <div id="quiz" class="text-align"></div>
                 <div class="card">
                     <div class="card-body p-5">
@@ -252,7 +251,7 @@
                     // Put an if-else statement here to match currentQuestion.topic with the navigation link
 
                     selections.push(
-                        `<label><input type="radio" name="question${questionNumber}" value="${currentQuestion.selection_1}">${currentQuestion.selection_1}</label>`,
+                        `<label><input type="radio" name="question${questionNumber}" value="${currentQuestion.selection_1}">${currentQuestion.selection_1 }</label>`,
                         `<label><input type="radio" name="question${questionNumber}" value="${currentQuestion.selection_2}">${currentQuestion.selection_2}</label>`
                     );
 
@@ -272,11 +271,8 @@
                     if (topic === 'Hat')
                         explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Hat", "Home")"> ${currentQuestion.topic}</a></div>`);
 
-
                     explains.push(
                         `<div class="explanation"> Hint: ${currentQuestion.explanation}</div>`,
-                        //`<div class="explanation"> Topic: ${currentQuestion.topic}</div>`
-
                     );
 
                     // add this question and its selections to the output
@@ -314,8 +310,6 @@
                     Array.prototype.forEach.call(all_ele, function (ele) {
                         ele.style.display = 'none';
                     });
-
-
 
                     // find selected answer
                     const answerContainer = answerContainers[questionNumber];
