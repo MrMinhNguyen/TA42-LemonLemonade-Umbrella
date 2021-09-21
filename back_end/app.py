@@ -130,7 +130,7 @@ def get_activity_name(id):
     elif id == 7:
         return "skateboarding"
     elif id == 8:
-        return "ourdoor_concert"
+        return "outdoor_concert"
     elif id == 9:
         return "kite_flying"
     elif id == 10:
