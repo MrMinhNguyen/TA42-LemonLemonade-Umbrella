@@ -894,6 +894,54 @@ def forecast_1day_i3():
     finally: 
         return str(result)
 
+
+# API to get current UVR for 10 most crowded suburbs in Melbourne (Iteration 3)
+@app.route('/uvr_inner_suburbs_i3')
+def uvr_inner_suburbs_i3():
+    # 18 most crowded suburbs in Melbourne
+    INNER_SUBURBS = ['3000', '3121', '3182', '3056', '3141',  
+                    '3051', '3181', '3053', '3162', '3168']
+    # Get the data
+    try:
+        # List of data to return
+        result = list()
+
+        # Get data for each postcode
+        for postcode in INNER_SUBURBS:
+            # Get coordinates from database
+            PARAMS = find_coordinate(postcode)[0]
+            suburb_info = find_coordinate(postcode)[1]
+            
+            # Send API request to OpenUV
+            req = requests.get(url=OPENUV_URL_RECENT, params=PARAMS, headers={"x-access-token": get_api_key()})
+            data = json.loads(req.text)
+            
+            # Compose result data
+            result.append({
+                'postcode': postcode,
+                'suburb': suburb_info['name'],
+                'UVR': data['result']['uv'],
+                'max_UVR': data['result']['uv_max']
+            })
+    # Return defalut data if error occurs
+    except Exception:
+        result = [
+            { 'postcode': '3000', 'suburb': 'MELBOURNE', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3121', 'suburb': 'BURNLEY', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3182', 'suburb': 'ST KILDA', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3056', 'suburb': 'BRUNSWICK', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3141', 'suburb': 'CHAPEL STREET NORTH', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3051', 'suburb': 'HOTHAM HILL', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3181', 'suburb': 'PRAHRAN', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3053', 'suburb': 'CARLTON', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3162', 'suburb': 'CAULFIELD', 'UVR': 0, 'max_UVR': 6 }, 
+            { 'postcode': '3168', 'suburb': 'CLAYTON', 'UVR': 0, 'max_UVR': 6 }
+        ]
+    # Always return data instead of error
+    finally:
+        return str(result)
+
+
 # --------------------------------------------------------------------------------------
 # --------------------------- Start the main API application ---------------------------
 # --------------------------------------------------------------------------------------
