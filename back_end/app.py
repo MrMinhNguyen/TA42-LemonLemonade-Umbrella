@@ -173,6 +173,36 @@ def evaluate_uvr_i3(uvr):
         return "M"
     else:
         return "H"
+
+
+# Function to round-up time
+def round_minute(hour_minute, forward=True):
+    hour = int(str(hour_minute).split(":")[0])
+    minute = int(str(hour_minute).split(":")[1])
+    
+    # Round time up
+    if forward:
+        if minute<=15:
+            return str(hour) + ":15"
+        elif minute>15 and minute<=30:
+            return str(hour) + ":30"
+        elif minute>30 and minute<=45:
+            return str(hour) + ":45"
+        else:
+            return str(hour+1) + ":00"
+    # Round time down
+    else:
+        if minute<=15:
+            return str(hour) + ":00"
+        elif minute>15 and minute<=30:
+            return str(hour) + ":15"
+        elif minute>30 and minute<=45:
+            return str(hour) + ":30"
+        else:
+            return str(hour) + ":45"
+
+
+
 # -----------------------------------------------------------------------
 # ------------------------ Create the Aplication ------------------------
 # -----------------------------------------------------------------------
@@ -879,10 +909,20 @@ def forecast_1day_i3():
             "moderate_uv": list()
         }
         for itv in intervals:
+            # Round the start time of the interval down
+            start_time = str(itv[0]["timestamp"])
+            start_time = round_minute(start_time, forward=False)
+
+            # Round the end time of the interval up
+            end_time = str(itv[-1]["timestamp"])
+            end_time = round_minute(end_time, forward=True)
+            
+            # Classify intervals into Low and Normal UVR
             if itv[0]["uvr"] == "L":
-                result["low_uv"].append("From " + str(itv[0]["timestamp"]) + " To " + str(itv[-1]["timestamp"]))
+                result["low_uv"].append("From " + start_time + " To " + end_time)
             else: 
-                result["moderate_uv"].append("From " + str(itv[0]["timestamp"]) + " To " + str(itv[-1]["timestamp"]))
+                result["moderate_uv"].append("From " + start_time + " To " + end_time)
+
     # If error occurs then return default data
     except Exception:
         result = {
