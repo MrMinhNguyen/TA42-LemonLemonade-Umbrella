@@ -25,7 +25,7 @@ namespace TA42_5120.Controllers
             ViewBag.Title = "UV Level near CBD";
 
             //This version of code is using URL
-            string urlAddress = "https://lemonumbrella.azurewebsites.net/uvr_inner_suburbs";
+            string urlAddress = "https://lemonumbrella.azurewebsites.net/uvr_inner_suburbs_i3";
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             if (response.StatusCode == HttpStatusCode.OK)
@@ -41,7 +41,6 @@ namespace TA42_5120.Controllers
                 readStream.Close();
 
                 data = data.TrimStart(new char[] { '[' }).TrimEnd(new char[] { ']' });
-
                 string[] split = data.Split(',');
                 List<string> uvr18 = new List<string>();
                 for (int i = 0; i < split.Length; i++)
@@ -135,6 +134,15 @@ namespace TA42_5120.Controllers
                 string uvrm7 = uvr18[27];
                 ViewBag.uvrm7 = uvrm7;
 
+                string pos8 = uvr18[28];
+                ViewBag.pos8 = pos8;
+                string sub8 = uvr18[29];
+                ViewBag.sub8 = sub8;
+                string uvr8 = uvr18[30];
+                ViewBag.uvr8 = uvr8;
+                string uvrm8 = uvr18[31];
+                ViewBag.uvrm8 = uvrm8;
+
                 string pos9 = uvr18[32];
                 ViewBag.pos9 = pos9;
                 string sub9 = uvr18[33];
@@ -144,50 +152,14 @@ namespace TA42_5120.Controllers
                 string uvrm9 = uvr18[35];
                 ViewBag.uvrm9 = uvrm9;
 
-                string pos11 = uvr18[40];
-                ViewBag.pos11 = pos11;
-                string sub11 = uvr18[41];
-                ViewBag.sub11 = sub11;
-                string uvr11 = uvr18[42];
-                ViewBag.uvr11 = uvr11;
-                string uvrm11 = uvr18[43];
-                ViewBag.uvrm11 = uvrm11;
-
-                string pos13 = uvr18[48];
-                ViewBag.pos13 = pos13;
-                string sub13 = uvr18[49];
-                ViewBag.sub13 = sub13;
-                string uvr13 = uvr18[50];
-                ViewBag.uvr13 = uvr13;
-                string uvrm13 = uvr18[51];
-                ViewBag.uvrm13 = uvrm13;
-
-                string pos15 = uvr18[56];
-                ViewBag.pos15 = pos15;
-                string sub15 = uvr18[57];
-                ViewBag.sub15 = sub15;
-                string uvr15 = uvr18[58];
-                ViewBag.uvr15 = uvr15;
-                string uvrm15 = uvr18[59];
-                ViewBag.uvrm15 = uvrm15;
-
-                string pos16 = uvr18[60];
-                ViewBag.pos16 = pos16;
-                string sub16 = uvr18[61];
-                ViewBag.sub16 = sub16;
-                string uvr16 = uvr18[62];
-                ViewBag.uvr16 = uvr16;
-                string uvrm16 = uvr18[63];
-                ViewBag.uvrm16 = uvrm16;
-
-                string pos18 = uvr18[68];
-                ViewBag.pos18 = pos18;
-                string sub18 = uvr18[69];
-                ViewBag.sub18 = sub18;
-                string uvrr18 = uvr18[70];
-                ViewBag.uvrr18 = uvrr18;
-                string uvrm18 = uvr18[71];
-                ViewBag.uvrm18 = uvrm18;
+                string pos10 = uvr18[36];
+                ViewBag.pos10 = pos10;
+                string sub10 = uvr18[37];
+                ViewBag.sub10 = sub10;
+                string uvr10 = uvr18[38];
+                ViewBag.uvr10 = uvr10;
+                string uvrm10 = uvr18[39];
+                ViewBag.uvrm10 = uvrm10;
 
                 return View();
             }
@@ -351,6 +323,7 @@ namespace TA42_5120.Controllers
         public ActionResult Data()
         {
             ViewBag.Title = "UV Data";
+            ViewBag.su1 = "Certain Places";
 
             return View();
         }
@@ -473,6 +446,7 @@ namespace TA42_5120.Controllers
         public ActionResult Data(string su)
         {
             ViewBag.Title = "UV Data";
+           
             string uvr1 = null;
             //receive postcode from user input and show uvr information. Source codes come from: http://www.codeproject.com/Questions/204778/Get-HTML-code-from-a-website-C 
             string urlAddress = "https://lemonumbrella.azurewebsites.net/uvr_location?postcode=" + su;

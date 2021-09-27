@@ -163,7 +163,6 @@ p {
 
 yeb {
     text-shadow: 2px 2px 3px gold;
-    font-weight: #FADD2D;
     font-weight: bold;
 }
 .yellowc {
@@ -2209,7 +2208,7 @@ progress {
 
 .form-control {
   display: block;
-  width: 300px;
+  width: 700px;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   font-weight: 400;
@@ -11150,12 +11149,12 @@ blockquote {
   padding: 0.75rem;
   text-transform: uppercase;
 }
-#mainNav .navbar-nav > li.nav-item > a.nav-link {
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.0625em;
-  text-transform: uppercase;
-}
+    #mainNav .navbar-nav > li.nav-item > a.nav-link {
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.0625em;
+        text-transform: uppercase;
+    }
 @media (min-width: 992px) {
   #mainNav {
     border-bottom: 1px solid transparent;
@@ -11214,7 +11213,7 @@ footer {
 }
 
 header.masthead {
-    margin:33px;
+    margin: 33px;
     margin-top: 20px;
     position: relative;
     margin-bottom: 3rem;
