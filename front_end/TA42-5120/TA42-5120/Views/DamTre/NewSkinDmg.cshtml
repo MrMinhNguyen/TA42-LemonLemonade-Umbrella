@@ -123,23 +123,36 @@
         td, th {
             text-align: center
         }
+
+        .headBG {
+            background-image: url('../../assets/img/skinHead.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center center;
+            height: 300px;
+        }
     </style>
 
 </head>
 
 <body style="margin-top: 80px !important">
-    <header class="masthead" style="background-image: url('../../assets/img/skindmgheader.jpg')">
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-10 col-xl-10">
-                    <div class="page-heading">
-                        <h1>Beware of the intense sunlight</h1><br />
-                        <span class="subheading">Your skin might not be as strong as you think.</span>
+    <div class="container-fluid">
+        <div class="row" id="top">
+            <div class="headBG shadow-2-strong carousel-item active">
+                <div class="mask" style="background-color: rgba(0, 0, 0, 0.5);">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="text-white text-center center">
+                            <h2 style="color: #ffc107">
+                                Protecting your skin Today
+                            </h2>
+                            <br>
+                            <h4 style="color: #ffc107">to help avoid Cancer in the Future. </h4>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
 
     <!-- Section: Design block -->
     <section>
@@ -150,7 +163,7 @@
                         <div class="card-body p-5">
                             <div class="w3-content w3-display-container">
                                 <div class='mySlides'>
-                                    <h3 id="what">Why is UVR dangerous?</h3>
+                                    <h3 id="what">Why is Ultraviolet radiation (UVR) dangerous?</h3>
                                     <div class="leftB">
                                         <p>UVR is comprised of UVA and UVB rays</p>
                                         <p>UVA can deeply penetrate the skin and cause damages, such as wrinkling or blotchiness. UVA also suppresses our immune system.</p>
@@ -225,25 +238,26 @@
         </div>
     </section>
 
-    <script>// Get the buttons
+    <script>
+    // Get the buttons
         var gen_button = document.getElementById("gen_button");
 
         // Get the modal
         var gen_modal = document.getElementById("gen_modal");
 
         // When the user clicks the button, open the modal
-        gen_button.onclick = function() {
+        gen_button.onclick = function () {
             gen_modal.style.display = "block";
         }
 
         var close_gen = document.getElementById("close_gen");
-        close_gen.onclick = function() {
+        close_gen.onclick = function () {
             gen_modal.style.display = "none";
         }
 
 
         // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target == gen_modal) {
                 gen_modal.style.display = "none";
             }
@@ -262,8 +276,8 @@
             var pagenum = [];
             var x = document.getElementsByClassName("mySlides");
             var dots = document.getElementsByClassName("demo");
-            if (n > x.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = x.length}
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length }
             for (i = 0; i < x.length; i++) {
                 x[i].style.display = "none";
             }
@@ -273,7 +287,7 @@
             x[slideIndex - 1].style.display = "block";
             pagenum.push(`<p style="text-align:center">Pages: ${slideIndex}/${x.length}</p>`);
             page_num.innerHTML = pagenum.join('');
-            dots[slideIndex-1].className += " w3-red";
+            dots[slideIndex - 1].className += " w3-red";
         }</script>
 </body>
 

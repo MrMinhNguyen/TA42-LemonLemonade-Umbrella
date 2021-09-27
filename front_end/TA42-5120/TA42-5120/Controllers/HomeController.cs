@@ -75,8 +75,8 @@ namespace TA42_5120.Controllers
                 string question1 = "1. " + Convert.ToString(json1["question"]);
                 string answer1 = Convert.ToString(json1["answer"]);
                 string explanation1 = Convert.ToString(json1["explanation"]);
-                string selection11 = " "+Convert.ToString(json1["selection_1"]);
-                string selection12 = " " + Convert.ToString(json1["selection_2"]);
+                string selection11 = Convert.ToString(json1["selection_1"]);
+                string selection12 = Convert.ToString(json1["selection_2"]);
                 ViewBag.topic1 = topic1;
                 ViewBag.question1 = question1;
                 ViewBag.answer1 = answer1;
@@ -95,8 +95,8 @@ namespace TA42_5120.Controllers
                 string question2 = "2. " + Convert.ToString(json2["question"]);
                 string answer2 = Convert.ToString(json2["answer"]);
                 string explanation2 = Convert.ToString(json2["explanation"]);
-                string selection21 = " " + Convert.ToString(json2["selection_1"]);
-                string selection22 = " " + Convert.ToString(json2["selection_2"]);
+                string selection21 = Convert.ToString(json2["selection_1"]);
+                string selection22 = Convert.ToString(json2["selection_2"]);
                 ViewBag.topic2 = topic2;
                 ViewBag.question2 = question2;
                 ViewBag.answer2 = answer2;
@@ -111,8 +111,8 @@ namespace TA42_5120.Controllers
                 string question3 = "3. " + Convert.ToString(json3["question"]);
                 string answer3 = Convert.ToString(json3["answer"]);
                 string explanation3 = Convert.ToString(json3["explanation"]);
-                string selection31 = " " + Convert.ToString(json3["selection_1"]);
-                string selection32 = " " + Convert.ToString(json3["selection_2"]);
+                string selection31 =  Convert.ToString(json3["selection_1"]);
+                string selection32 = Convert.ToString(json3["selection_2"]);
                 ViewBag.topic3 = topic3;
                 ViewBag.question3 = question3;
                 ViewBag.answer3 = answer3;
@@ -127,8 +127,8 @@ namespace TA42_5120.Controllers
                 string question4 = "4. " +Convert.ToString(json4["question"]);
                 string answer4 = Convert.ToString(json4["answer"]);
                 string explanation4 = Convert.ToString(json4["explanation"]);
-                string selection41 = " " + Convert.ToString(json4["selection_1"]);
-                string selection42 = " " + Convert.ToString(json4["selection_2"]);
+                string selection41 = Convert.ToString(json4["selection_1"]);
+                string selection42 = Convert.ToString(json4["selection_2"]);
                 ViewBag.topic4 = topic4;
                 ViewBag.question4 = question4;
                 ViewBag.answer4 = answer4;
@@ -143,8 +143,8 @@ namespace TA42_5120.Controllers
                 string question5 = "5. "+Convert.ToString(json5["question"]);
                 string answer5 = Convert.ToString(json5["answer"]);
                 string explanation5 = Convert.ToString(json5["explanation"]);
-                string selection51 = " " + Convert.ToString(json5["selection_1"]);
-                string selection52 = " " + Convert.ToString(json5["selection_2"]);
+                string selection51 = Convert.ToString(json5["selection_1"]);
+                string selection52 = Convert.ToString(json5["selection_2"]);
                 ViewBag.topic5 = topic5;
                 ViewBag.question5 = question5;
                 ViewBag.answer5 = answer5;
@@ -159,8 +159,8 @@ namespace TA42_5120.Controllers
                 string question6 = "6. "+ Convert.ToString(json6["question"]);
                 string answer6 = Convert.ToString(json6["answer"]);
                 string explanation6 = Convert.ToString(json6["explanation"]);
-                string selection61 = " " + Convert.ToString(json6["selection_1"]);
-                string selection62 = " " + Convert.ToString(json6["selection_2"]);
+                string selection61 = Convert.ToString(json6["selection_1"]);
+                string selection62 = Convert.ToString(json6["selection_2"]);
                 ViewBag.topic6 = topic6;
                 ViewBag.question6 = question6;
                 ViewBag.answer6 = answer6;
@@ -175,8 +175,8 @@ namespace TA42_5120.Controllers
                 string question7 = "7. " + Convert.ToString(json7["question"]);
                 string answer7 = Convert.ToString(json7["answer"]);
                 string explanation7 = Convert.ToString(json7["explanation"]);
-                string selection71 = " " + Convert.ToString(json7["selection_1"]);
-                string selection72 = " " + Convert.ToString(json7["selection_2"]);
+                string selection71 = Convert.ToString(json7["selection_1"]);
+                string selection72 = Convert.ToString(json7["selection_2"]);
                 ViewBag.topic7 = topic7;
                 ViewBag.question7 = question7;
                 ViewBag.answer7 = answer7;
