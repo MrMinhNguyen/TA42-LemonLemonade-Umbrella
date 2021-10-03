@@ -24,7 +24,7 @@ class forecast_1day_i3(unittest.TestCase):
         expected_structure = ['suburb','low_uv','moderate_uv']
 
         params = {
-            'day': 2021-0o11-13,
+            'day': "2021-11-13",
             'postcode': 3000
         }
         req = requests.get(url="https://lemonumbrella.azurewebsites.net/forecast_1day_i3", params=params)
