@@ -437,8 +437,8 @@
             document.getElementById('level_' + row).innerHTML = get_level(data[row]['max_uvr']);
 
             // Get activities
-            document.getElementById('exc_act_' + row).innerHTML = get_activity_img(data[row]['excellent_activites']);
-            document.getElementById('poor_act_' + row).innerHTML = get_activity_img(data[row]['poor_activites']);
+            document.getElementById('exc_act_' + row).innerHTML = get_activity_img(data[row]['excellent_activites'].slice(0,6));
+            document.getElementById('poor_act_' + row).innerHTML = get_activity_img(data[row]['poor_activites'].slice(0, 6));
 
             // Show the table
             document.getElementById('future_table').style.display = "block";
