@@ -26,7 +26,7 @@
 
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
-
+    <link href="~/Content/TA42CommonCSS.css" rel="stylesheet" />
     <style>
         .leftB {
             border-left: 6px solid #f0f321;
@@ -34,110 +34,31 @@
             margin-left: 20px;
         }
 
-        .center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .centerP {
-            margin-left: auto;
-            margin-right: auto;
-        }
 
         .skinPic {
             border: 1px solid rgb(19, 20, 4);
             padding: 5px;
         }
 
-        .cite {
-            text-align: right;
-            font-size: 15px;
-            color: gray;
-        }
 
         .carosel_button {
-            border-radius: 15px;
-            background-color: lightgray;
-            color: black;
-            border: none;
-            padding: 16px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            transition-duration: 0.4s;
-            cursor: pointer;
+            width: 140px;
+            
         }
 
-            .carosel_button:hover {
-                background-color: yellow;
-                color: black;
-            }
-        /* Labels for checked inputs */
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-        }
-
-        input:checked + span {
-            color: darkorange;
-        }
-
-        input[type="checkbox"]:checked {
-            box-shadow: 0 0 0 3px yellow;
-        }
-
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
-        .modal-content {
-            border-radius: 15px;
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-            .close:hover,
-            .close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-            }
 
         td, th {
             text-align: center
+        }
+
+        .modal-content {
+            width: 850px;
         }
     </style>
 
 </head>
 
-<body style="margin-top: 80px !important">
+<body style="margin-top: 88px !important">
     <!-- Page Header-->
     <header class="masthead" style="background-image: url('../../assets/img/protectorSport.jpg')">
         <div class="container position-relative px-4 px-lg-5">
@@ -234,7 +155,7 @@
                                         <span class="close" id="close_walking">&times;</span>
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col-md-5 gx-5 mb-4">
+                                                <div class="col-md-7 gx-5 mb-4">
                                                     <h3 id="Types"><strong>Tips for walking </strong></h3>
                                                     <li>Always remember to wear sunglasses when UV radiation is high. Roads and paths can reflect high levels of UV, so eye protection is important when walking.</li>
                                                     <li>Look for shady walking paths and tracks whenever possible.</li>
@@ -258,7 +179,7 @@
                                         <span class="close" id="close_running">&times;</span>
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col-md-5 gx-5 mb-4">
+                                                <div class="col-md-7 gx-5 mb-4">
                                                     <h3 id="Types"><strong>Tips for running</strong></h3>
                                                     <li>Try to run earlier in the morning or later in the day when the sun's UV is not as intense – particularly for long runs.</li>
                                                     <li>For running, wear a legionnaire hat with a peak at the front and long flap for best protection.</li>
@@ -283,7 +204,7 @@
                                         <span class="close" id="close_swimming">&times;</span>
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col-md-5 gx-5 mb-4">
+                                                <div class="col-md-7 gx-5 mb-4">
                                                     <h3 id="Types"><strong>Tips for swimming</strong></h3>
                                                     <li>
                                                         Make sure to apply sunscreen to your face, neck, shoulders, back and back of your legs because those parts will be particularly vulnerable during the swim.
@@ -315,7 +236,7 @@
                                         <span class="close" id="close_cycling">&times;</span>
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col-md-5 gx-5 mb-4">
+                                                <div class="col-md-7 gx-5 mb-4">
                                                     <h3 id="Types"><strong>Tips for cycling</strong></h3>
                                                     <li>
                                                         Remember to apply sunscreen to the tops of your hands and the back of your neck which are often forgotten.
@@ -346,7 +267,7 @@
                                         <span class="close" id="close_football">&times;</span>
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col-md-5 gx-5 mb-4">
+                                                <div class="col-md-7 gx-5 mb-4">
                                                     <h3 id="Types"><strong>Tips for football</strong></h3>
                                                     <li>
                                                         Consider a dry touch or active formula that won't be greasy and impact your grip on the ball.
@@ -355,7 +276,7 @@
                                                         Keep yourself hydrated and reapply sunscreen during breaks.
                                                     </li>
                                                 </div>
-                                                <div class="col-md-5 gx-5 mb-4">
+                                                <div class="col-md-7 gx-5 mb-4">
                                                     <div class="bg-image hover-overlay ripple shadow-2-strong rounded-5" data-mdb-ripple-color="light">
                                                         <img src="~/assets/img/football.jpg" class="img-fluid" />
                                                         <a href="#!">
@@ -374,7 +295,7 @@
                                         <span class="close" id="close_cricket">&times;</span>
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col-md-5 gx-5 mb-4">
+                                                <div class="col-md-7 gx-5 mb-4">
                                                     <h3 id="Types"><strong>Tips for cricket</strong></h3>
                                                     <li>
                                                         If you are in the slips and fear dropping a catch, look for a dry touch or active formula that won't be greasy.
@@ -402,7 +323,7 @@
                                         <span class="close" id="close_tennis">&times;</span>
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col-md-5 gx-5 mb-4">
+                                                <div class="col-md-7 gx-5 mb-4">
                                                     <h3 id="Types"><strong>Tips for Tennis</strong></h3>
                                                     <li>
                                                         Take a break under shade between games and try to schedule training and matches earlier in the morning or later in the day when the sun's UV is not as intense.

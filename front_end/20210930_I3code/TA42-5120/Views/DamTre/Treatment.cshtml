@@ -17,7 +17,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
     <link href="~/Content/TA42CommonCSS.css" rel="stylesheet" />
     <style>
-       
+     
+
         .carousel-item.active {
             height: 50vh;
         }
@@ -66,10 +67,13 @@
             height: 50vh;
         }
 
+        .modal-content {
+            width: 650px;
+        }
     </style>
 </head>
 
-<body style="margin-top: 80px !important">
+<body style="margin-top: 84px !important">
     <div class="container-fluid">
         <div class="row" id="top">
             <div class="headBG shadow-2-strong carousel-item active">
@@ -108,7 +112,7 @@
                                                     <p id="pdf16"><input type="checkbox">&nbsp;<span>Gently treat the affected area.</span></p>
                                                     <p id="pdf17"><input type="checkbox">&nbsp;<span>Protect your skin from any further exposure to sunlight.</span></p>
                                                 </div>
-                                                <button class="carosel_button" onclick="genPDF1()">Generate PDF</button>
+                                                <button class="carosel_button" onclick="genPDF1()">Download this note</button>
 
                                                 <script>
                                                     function genPDF1() {
@@ -155,7 +159,7 @@
                                         <p id="pdf22"><input type="checkbox">&nbsp;<span>The <b>swelling gets severe</b> and <b>does not improve</b> after a few days.</span></p>
                                         <p id="pdf23"><input type="checkbox">&nbsp;<span>The affected areas show signs of <b>infection</b>, such as Severe Pain or Red Fluid coming from the blisters.</span></p>
                                     </div>
-                                    <button class="carosel_button" onclick="genPDF2()">Generate PDF</button>
+                                    <button class="carosel_button" onclick="genPDF2()">Download this note</button>
                                     <br>
                                     <br>
                                     <br>
@@ -185,7 +189,7 @@
                                         <p id="pdf32"><input type="checkbox">&nbsp;<span>Faints</span></p>
                                         <p id="pdf33"><input type="checkbox">&nbsp;<span>Dehydration</span></p>
                                     </div>
-                                    <button class="carosel_button" onclick="genPDF3()">Generate PDF</button>
+                                    <button class="carosel_button" onclick="genPDF3()">Download this note</button>
 
                                     <script>
                                         function genPDF3() {
@@ -211,7 +215,7 @@
                                     <h3 id="hospital">Search for Nearby Hospitals when in emergency</h3>
                                     <form action="javascript:get_hospitals()" class="domain-form">
                                         <div class="form-group d-md-flex">
-                                            <input id="postcode" type="text" class="form-control" placeholder="Enter your postcode">
+                                            <input id="postcode" type="text" class="form-control" placeholder="Enter your postcode (3000-3999)">
                                             <input type="submit" style="height:55px; width:100px" class="carosel_button" value="Search">
                                         </div>
                                     </form>

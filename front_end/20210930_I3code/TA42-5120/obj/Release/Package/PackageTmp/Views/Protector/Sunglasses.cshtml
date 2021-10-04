@@ -14,87 +14,19 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="~/Content/TA42CommonCSS.css" rel="stylesheet" />
     <style>
-        .mySlides {
-            display: none;
-        }
-
-        .carosel_button {
-            border-radius: 15px;
-            background-color: lightgray;
-            color: black;
-            border: none;
-            padding: 16px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            transition-duration: 0.4s;
-            cursor: pointer;
-        }
-
-            .carosel_button:hover {
-                background-color: yellow;
-                color: black;
-            }
-        /* Labels for checked inputs */
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-        }
-
-        input:checked + span {
-            color: darkorange;
-        }
-
-        input[type="checkbox"]:checked {
-            box-shadow: 0 0 0 3px yellow;
-        }
-
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
         .modal-content {
-            border-radius: 15px;
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
+            width: 600px;
         }
 
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
+        .modal {
+            padding-top: 220px !important; /* Location of the box */
         }
-
-            .close:hover,
-            .close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-            }
     </style>
 
 </head>
-<body style="margin-top: 80px !important">
+<body style="margin-top: 88px !important">
     <!-- Navigation-->
     <!-- Page Header-->
     <!-- Page Header-->
@@ -217,7 +149,7 @@
                                     <p id="pdf5"><input type="checkbox">&nbsp;<span>Choose sunglasses that have soft elastic to keep the glasses in place. Also, choose a style that is safe for children to use, e.g. make sure the arms of glasses don't become a safety hazard.</span></p>
                                     <p id="pdf6"><input type="checkbox">&nbsp;<span>If your children don’t want to wear sunglasses, put on a suitable hat can still help protect their eyes from the damage of UV radiation.</span></p>
 
-                                    <button class="carosel_button" onclick="genPDF()">Generate PDF</button>
+                                    <button class="carosel_button" onclick="genPDF()">Download this note</button>
 
                                     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
                                     <script>

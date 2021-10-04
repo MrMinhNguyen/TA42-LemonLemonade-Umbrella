@@ -30,11 +30,18 @@
             height: 300px;
             color: #ffc107;
         }
+
+        .modal-content {
+            width: 850px;
+        }
+        body {
+            margin-top: 84px !important;
+        }
     </style>
 
 </head>
 
-<body style="margin-top: 80px !important">
+<body style="margin-top: 84px !important">
     <div class="container-fluid">
         <div class="row" id="top">
             <div class="headBG shadow-2-strong carousel-item active">
@@ -52,68 +59,42 @@
             </div>
         </div>
     </div>
-
     <!-- Section: Design block -->
     <section>
         <div class="container">
             <div class="row d-flex justify-content-center mt-5">
-                <div class="col-lg-9">
+                <div class="col-lg-12">
                     <div class="card mb-2">
                         <div class="card-body p-5">
                             <div class="w3-content w3-display-container">
-                                <div class="mySlides">
+                                <div class='mySlides'>
                                     <h3 id="what">Why is Ultraviolet radiation (UVR) dangerous?</h3>
-                                    <p> UVR is comprised of UVA and UVB rays:</p>
-                                    <ul class="leftB">
-                                        <li>
-                                            <b>UVA</b> can deeply penetrate the skin and cause damages, such as wrinkling or
-                                            blotchiness. UVA also suppresses our immune system.
-                                        </li>
-                                        <li>
-                                            <b>UVB</b> penetrates the top layer of the skin and causes sunburn, which could
-                                            further lead to skin cancer
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div class="mySlides">
-                                    <h3 id="what">Visible Consequences</h3>
-                                    <p>
-                                        Frequent exposure to intense sunlight could cause premature aging of the skin as it
-                                        becomes thicker and has wrinkles. Up to 90% of the visible skin aging changes are caused
-                                        by the interaction with sunlight. With proper protection from UV radiation, most
-                                        premature aging of the skin can be avoided.
-                                    </p>
-                                    <p>
-                                        If you see unusual skin growths on body areas that are frequently exposed to the
-                                        sunlight, such as the face, hands, or neck, it could be a sign of skin disorders caused
-                                        by UVR. Those areas could be raised, become red, or have a rough surface and also could
-                                        increase the risk of having skin cancer. <span class="undli">
-                                            In that case, please come
-                                            and see the doctor as
-                                            soon as possible.
-                                        </span>
-                                    </p>
-                                    <br>
-                                    <div class="container skinData">
-                                        <div class="row">
-                                            <h4>Number of Skin cancer in Australia</h4>
-                                            <img src="~/assets/img/skin1.png" alt="skin cancer data 1" class="skinPic" style="width: 50%;">
-                                            <img src="~/assets/img/skin2.png" alt="skin cancer data 2" class="skinPic" style="width: 50%;">
-                                        </div>
-
-                                        <p class="cite">
-                                            Retrieve from:
-                                            <a href="https://vivacommunications.com.au/blog/skin-cancer-fact-sheet-australia/"
-                                               target="_blank">
-                                                VIVA! Communications: Skin cancer in Australia
-                                            </a>
-                                        </p>
+                                    <div class="leftB">
+                                        <p>UVR is comprised of UVA and UVB rays</p>
+                                        <p>UVA can deeply penetrate the skin and cause damages, such as wrinkling or blotchiness. UVA also suppresses our immune system.</p>
+                                        <p>UVB penetrates the top layer of the skin and causes sunburn, which could further lead to skin cancer.</p>
                                     </div>
                                 </div>
 
                                 <div class='mySlides'>
-                                    <h3 id="Types">Severe Consequences<br />UVR can cause Skin cancer</h3>
+                                    <h3 id="what">Visible Consequences</h3>
+                                    <div class="leftB">
+                                        <p>Frequent exposure to intense sunlight could cause premature aging of the skin as it becomes thicker and has wrinkles.</p>
+                                        <p><b>Up to 90%</b> of the visible skin aging changes are caused by the interaction with sunlight. With proper protection from UV radiation, most premature aging of the skin <b>can be avoided</b>.</p>
+                                    </div>
+
+                                    <div class="leftB">
+                                        <p>If you see unusual skin growths on body areas that are frequently exposed to the sunlight, such as the face, hands, or neck, it could be a sign of skin disorders caused by UVR.</p>
+                                        <p> Those areas could be raised, become red, or have a rough surface and also could <b>increase the risk</b> of having <b>skin cancer</b>.</p>
+                                        <p>In that case, <b>please come and see the doctor as soon as possible</b>.</p>
+                                    </div>
+                                </div>
+
+                                <div class='mySlides'>
+                                    <h3 id="Types">Severe Consequences</h3>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-9">
                                                 <div class="leftB">
                                                     <p><b>Melanoma</b> is a type of skin cancer that could be caused by UVR. It is one of the most common cancers <b>among young people aging from 15 to 29</b>. </p>
                                                     <p>UV exposure and sunburns, particularly during childhood, <b>increases the risk</b> of having this disease.</p>
@@ -128,10 +109,10 @@
 
                                                 <button class="carosel_button" id="gen_button">How UVR damages the DNA</button>
                                                 <div id="gen_modal" class="modal">
-                                                    <div class="modal-content" style="width: 700px;">
+                                                    <div class="modal-content">
                                                         <span class="close" id="close_gen">&times;</span>
                                                         <p><b>How UVR damages the DNA</b></p>
-                                                        <img src="~/assets/img/skinDNA.jpg" alt="skin cells DNA influenced by UVR" class="skinPic centerP" style="width:100%;"><br>
+                                                        <img src="~/assets/img/dna.jpg" alt="First-aid Treatement to sunburn" class="skinPic centerP" style="width:100%;"><br>
                                                         <p class="cite" style="text-align: left;">
                                                             Retrieve from:
                                                             <a href="https://www.cancercouncil.com.au/wp-content/uploads/2020/08/UV-damages-DNA-1024x633.jpg" target="_blank">Statistics on skin cancer in Australia</a>
@@ -139,7 +120,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        
+                                            <div class="col-md-3">
+                                                <img src="~/assets/img/cancerstat.png" alt="First-aid Treatement to sunburn" class="skinPic centerP" style="width:100%;"><br>
+                                                <p class="cite" style="text-align: left;">
+                                                    Retrieve from:
+                                                    <a href="https://vivacommunications.com.au/blog/skin-cancer-fact-sheet-australia/" target="_blank">Statistics on skin cancer in Australia</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

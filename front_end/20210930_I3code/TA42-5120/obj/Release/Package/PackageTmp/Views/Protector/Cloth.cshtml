@@ -15,87 +15,16 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="~/Content/TA42CommonCSS.css" rel="stylesheet" />
     <style>
-        .mySlides {
-            display: none;
-        }
-
-        .carosel_button {
-            border-radius: 15px;
-            background-color: lightgray;
-            color: black;
-            border: none;
-            padding: 16px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            transition-duration: 0.4s;
-            cursor: pointer;
-        }
-
-            .carosel_button:hover {
-                background-color: yellow;
-                color: black;
-            }
-        /* Labels for checked inputs */
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-        }
-
-        input:checked + span {
-            color: darkorange;
-        }
-
-        input[type="checkbox"]:checked {
-            box-shadow: 0 0 0 3px yellow;
-        }
-
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
         .modal-content {
-            border-radius: 15px;
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
+            width: 650px;
         }
 
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-            .close:hover,
-            .close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-            }
     </style>
 </head>
 
-<body style="margin-top: 80px !important">
+<body style="margin-top: 88px !important">
     <!-- Page Header-->
     <header class="masthead" style=" background-image: url('../../assets/img/clothtitle.jpg');">
         <div class="container position-relative px-4 px-lg-5">
@@ -204,7 +133,7 @@
                                     <h3 id="tips">Tips for parents</h3>
                                     <p id="pdf1"><input type="checkbox">&nbsp;<span>Try to cover as much skin as possible with cool, loose-fitting clothing made from densely-woven fabric like cotton.</span></p>
                                     <p id="pdf2"><input type="checkbox">&nbsp;<span>If your child is wearing a singlet top or a dress with thin straps, remember to layer them with a t-shirt or a shirt before going outside to play.</span></p>
-                                    <button class="carosel_button" onclick="genPDF()">Generate PDF</button>
+                                    <button class="carosel_button" onclick="genPDF()">Download this note</button>
                                     <br>
                                     <img src="~/assets/img/upfcloth.jpg" class="img-fluid shadow-5 rounded-5 mb-4" />
 
@@ -223,7 +152,7 @@
                                             doc.text(0.5, 0.5, title);
                                             doc.text(0.5, 1.5, lines1);
                                             doc.text(0.5, 2.5, lines2);
-                                            doc.save('Hat Recommendation.pdf');
+                                            doc.save('Clothes Recommendation.pdf');
                                         }
                                     </script>
 

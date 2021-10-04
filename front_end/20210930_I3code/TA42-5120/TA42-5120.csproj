@@ -167,6 +167,7 @@
     <Content Include="assets\img\keepup.png" />
     <Content Include="assets\img\kite_flying.png" />
     <Content Include="assets\img\lawn_mowing.png" />
+    <Content Include="assets\img\logo.jpg" />
     <Content Include="assets\img\newSchedule.png" />
     <Content Include="assets\img\newTreatment.png" />
     <Content Include="assets\img\outdoor_concert.png" />
@@ -229,6 +230,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\FIT5120-2021-TA42-Project - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\TA42-2021-TA42-Project-I3 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\TA42-sunlight-i3 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

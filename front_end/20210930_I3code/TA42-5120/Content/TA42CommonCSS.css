@@ -1,4 +1,9 @@
-﻿/*slide*/
+﻿
+/*Header*/
+header {
+    margin-top: 34px;
+}
+/*slide*/
 .mySlides {
     display: none;
 }
@@ -48,7 +53,6 @@
     padding-left: 80px;
     padding-top: 40px;
     border: 1px solid #888;
-    width: 650px;
 }
 
 /* The Close Button */

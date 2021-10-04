@@ -15,10 +15,11 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <link href="~/Content/TA42CommonCSS.css" rel="stylesheet" />
+
     <style>
 
 
-        .center {
+        .center1 {
             display: block;
             margin-left: auto;
             margin-right: auto;
@@ -26,7 +27,6 @@
         }
 
         
-
         /* Future UV table */
         table {
             border-collapse: collapse;
@@ -41,7 +41,7 @@
             border: 1px solid #000000;
             text-align: center;
             padding: 8px;
-            font-size:20px;
+            font-size: 20px;
         }
 
         #futureTable tr td:nth-child(1) {
@@ -49,60 +49,11 @@
         }
 
         /* Learn more button */
-        .carosel_button {
-            border-radius: 15px;
-            background-color: lightgray;
-            color: black;
-            border: none;
-            padding: 10px 16px;
-            text-align: center;
-            font-weight: bold;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-
-            .carosel_button:hover {
-                background-color: yellow;
-                color: black;
-            }
-
-        /* The Modal (background) */
-        .modal {
-            display: none;
-            /* Hidden by default */
-            position: fixed;
-            /* Stay in place */
-            z-index: 1;
-            /* Sit on top */
-            padding-top: 100px;
-            /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%;
-            /* Full width */
-            height: 100%;
-            /* Full height */
-            overflow: auto;
-            /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0);
-            /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4);
-            /* Black w/ opacity */
-        }
-
-        /* Modal Content */
+   
         .modal-content {
-            border-radius: 15px;
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
+            width: 800px;
         }
 
-        /* The Close Button */
 
         thead {
             font-weight: bold;
@@ -151,10 +102,15 @@
             .activity_table td {
                 border: none;
             }
+
+        ol li a {
+            color: #1266f1 !important;
+            text-decoration: underline !important;
+        }
     </style>
 </head>
 
-<body style="margin-top: 80px !important">
+<body style="margin-top: 88px !important">
     <header class="masthead" style="background-image: url('../../assets/img/forecast.png')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -188,11 +144,12 @@
                                         in the future
                                     </h5>
 
-                                    <div class="col-lg-10 offset-md-1" style="height:550px;">
-                                        <div class="col-md-6 offset-md-2">
+                                    <div class="col-lg-10 offset-md-1" style="height:700px;">
+                                        <div class="col-md-6">
                                             <form action="javascript:get_futures()" class="domain-form">
                                                 <div class="form-group d-md-flex">
-                                                    <input id="postcode" type="text" class="form-control" placeholder="Enter your postcode">
+                                                    
+                                                    <input id="postcode" type="text" class="form-control" required pattern="3[0-9]{3}" style="height: 50px; min-width:550px; " value="" placeholder="Search for UV levels by VIC postcode (3000-3999)" aria-label="Search" />
                                                     <input type="submit" class="carosel_button" value="Search">
                                                 </div>
                                             </form>
@@ -246,7 +203,7 @@
                                     <div id="modal_0" class="modal">
                                         <div class="modal-content">
                                             <span class="close" id="close_0">&times;</span>
-                                            <h3 id="modal_date_0"></h3><br>
+                                            <h5 id="modal_date_0"></h5><br>
                                             <table class="table table-striped">
                                                 <tbody>
                                                     <tr>
@@ -261,15 +218,17 @@
                                             </table>
                                             <span><b>Recommened Activities</b></span><div id="exc_act_0"></div><br>
                                             <span><b>Not Recommened Activities</b></span><div id="poor_act_0"></div>
+
+                                            <span><b>Before you let your children play outside, two things can be done:</b></span><br>
+                                            <div style="padding-left:25px;">
+                                                <ol>
+                                                    <li><a href="@Url.Action("Data","Data")" target="_blank"> Check the current UV Index and use the proper protectors </a></li>
+                                                    <li><a href="@Url.Action("ProSport", "Home")" target="_blank"> Check how to stay safe when taking sports under intense sunlight </a></li>
+                                                </ol>
+                                            </div>
                                             <br>
                                             <br>
-                                            <a href="@Url.Action("ProSport", "Home")">
-                                                How to stay safe when taking sports under intense sunlight?(Click me)
-                                            </a>
-                                            <br>
-                                            <br>
-                                            <img src="~/assets/img/havefun.png" class="center" />
-                                            <br>
+                                            <img src="~/assets/img/havefun.png" class="center1" />
                                             <br>
                                             <br>
 
@@ -278,7 +237,7 @@
                                     <div id="modal_1" class="modal">
                                         <div class="modal-content">
                                             <span class="close" id="close_1">&times;</span>
-                                            <h3 id="modal_date_1"></h3><br>
+                                            <h5 id="modal_date_1"></h5><br>
                                             <table class="table table-striped">
                                                 <tbody>
                                                     <tr>
@@ -293,15 +252,17 @@
                                             </table>
                                             <span><b>Recommened Activities</b></span><div id="exc_act_1"></div><br>
                                             <span><b>Not Recommened Activities</b></span><div id="poor_act_1"></div>
+
+                                            <span><b>Before you let your children play outside, two things can be done:</b></span><br>
+                                            <div style="padding-left:25px;">
+                                                <ol>
+                                                    <li><a href="@Url.Action("Data","Data")" target="_blank"> Check the current UV Index and use the proper protectors </a></li>
+                                                    <li><a href="@Url.Action("ProSport", "Home")" target="_blank"> Check how to stay safe when taking sports under intense sunlight </a></li>
+                                                </ol>
+                                            </div>
                                             <br>
                                             <br>
-                                            <a href="@Url.Action("ProSport", "Home")">
-                                                How to stay safe when taking sports under intense sunlight?(Click me)
-                                            </a>
-                                            <br>
-                                            <br>
-                                            <img src="~/assets/img/havefun.png" class="center" />
-                                            <br>
+                                            <img src="~/assets/img/havefun.png" class="center1" />
                                             <br>
                                             <br>
                                         </div>
@@ -309,7 +270,7 @@
                                     <div id="modal_2" class="modal">
                                         <div class="modal-content">
                                             <span class="close" id="close_2">&times;</span>
-                                            <h3 id="modal_date_2"></h3><br>
+                                            <h5 id="modal_date_2"></h5><br>
                                             <table class="table table-striped">
                                                 <tbody>
                                                     <tr>
@@ -324,15 +285,17 @@
                                             </table>
                                             <span><b>Recommened Activities</b></span><div id="exc_act_2"></div><br>
                                             <span><b>Not Recommened Activities</b></span><div id="poor_act_2"></div>
+
+                                            <span><b>Before you let your children play outside, two things can be done:</b></span><br>
+                                            <div style="padding-left:25px;">
+                                                <ol>
+                                                    <li><a href="@Url.Action("Data","Data")" target="_blank"> Check the current UV Index and use the proper protectors </a></li>
+                                                    <li><a href="@Url.Action("ProSport", "Home")" target="_blank"> Check how to stay safe when taking sports under intense sunlight </a></li>
+                                                </ol>
+                                            </div>
                                             <br>
                                             <br>
-                                            <a href="@Url.Action("ProSport", "Home")">
-                                                How to stay safe when taking sports under intense sunlight?(Click me)
-                                            </a>
-                                            <br>
-                                            <br>
-                                            <img src="~/assets/img/havefun.png" class="center" />
-                                            <br>
+                                            <img src="~/assets/img/havefun.png" class="center1" />
                                             <br>
                                             <br>
                                         </div>
@@ -340,7 +303,7 @@
                                     <div id="modal_3" class="modal">
                                         <div class="modal-content">
                                             <span class="close" id="close_3">&times;</span>
-                                            <h3 id="modal_date_3"></h3><br>
+                                            <h5 id="modal_date_3"></h5><br>
                                             <table class="table table-striped">
                                                 <tbody>
                                                     <tr>
@@ -355,15 +318,17 @@
                                             </table>
                                             <span><b>Recommened Activities</b></span><div id="exc_act_3"></div><br>
                                             <span><b>Not Recommened Activities</b></span><div id="poor_act_3"></div>
+
+                                            <span><b>Before you let your children play outside, two things can be done:</b></span><br>
+                                            <div style="padding-left:25px;">
+                                                <ol>
+                                                    <li><a href="@Url.Action("Data","Data")" target="_blank"> Check the current UV Index and use the proper protectors </a></li>
+                                                    <li><a href="@Url.Action("ProSport", "Home")" target="_blank"> Check how to stay safe when taking sports under intense sunlight </a></li>
+                                                </ol>
+                                            </div>
                                             <br>
                                             <br>
-                                            <a href="@Url.Action("ProSport", "Home")">
-                                                How to stay safe when taking sports under intense sunlight?(Click me)
-                                            </a>
-                                            <br>
-                                            <br>
-                                            <img src="~/assets/img/havefun.png" class="center" />
-                                            <br>
+                                            <img src="~/assets/img/havefun.png" class="center1" />
                                             <br>
                                             <br>
                                         </div>
@@ -371,7 +336,7 @@
                                     <div id="modal_4" class="modal">
                                         <div class="modal-content">
                                             <span class="close" id="close_4">&times;</span>
-                                            <h3 id="modal_date_4"></h3><br>
+                                            <h5 id="modal_date_4"></h5><br>
                                             <table class="table table-striped">
                                                 <tbody>
                                                     <tr>
@@ -386,15 +351,17 @@
                                             </table>
                                             <span><b>Recommened Activities</b></span><div id="exc_act_4"></div><br>
                                             <span><b>Not Recommened Activities</b></span><div id="poor_act_4"></div>
+
+                                            <span><b>Before you let your children play outside, two things can be done:</b></span><br>
+                                            <div style="padding-left:25px;">
+                                                <ol>
+                                                    <li><a href="@Url.Action("Data","Data")" target="_blank"> Check the current UV Index and use the proper protectors </a></li>
+                                                    <li><a href="@Url.Action("ProSport", "Home")" target="_blank"> Check how to stay safe when taking sports under intense sunlight </a></li>
+                                                </ol>
+                                            </div>
                                             <br>
                                             <br>
-                                            <a href="@Url.Action("ProSport", "Home")">
-                                                How to stay safe when taking sports under intense sunlight?(Click me)
-                                            </a>
-                                            <br>
-                                            <br>
-                                            <img src="~/assets/img/havefun.png" class="center" />
-                                            <br>
+                                            <img src="~/assets/img/havefun.png" class="center1" />
                                             <br>
                                             <br>
                                         </div>
@@ -532,7 +499,7 @@
                 success: function (data) {
                     const schedule = JSON.parse(data.replaceAll(`'`, `"`));
 
-                    document.getElementById('modal_date_' + row).innerHTML = "Our forecast for the day: " + dt;
+                    document.getElementById('modal_date_' + row).innerHTML = "The following table shows the schedule for when the UV Index would be Low or Moderate on the day: " + dt;
                     document.getElementById('low_' + row).innerHTML = list_schedule(schedule['low_uv']);
                     document.getElementById('moderate_' + row).innerHTML = list_schedule(schedule['moderate_uv']);
 

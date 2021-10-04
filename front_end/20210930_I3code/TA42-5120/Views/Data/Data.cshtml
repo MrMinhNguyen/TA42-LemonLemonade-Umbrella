@@ -21,6 +21,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
     <style>
+        body {
+            margin-top: 88px !important;
+        }
+
         input[type=text] {
             width: 400px;
             padding: 12px 20px;
@@ -140,7 +144,7 @@
             {
                 <div class="col-md-8 offset-md-2 mt-5 border border-warning pt-3">
                     <div class="input-group mb-3">
-                        <input id="uvr" name="su" type="text" required pattern="3[0-9]{3}" style="height: 50px; min-width:550px; " value="" placeholder="Search for UV levels by postcode" aria-label="Search" />
+                        <input id="uvr" name="su" type="text" required pattern="3[0-9]{3}" style="height: 50px; min-width:550px; " value="" placeholder="Search for UV levels by VIC postcode (3000-3999)" aria-label="Search" />
                         <input type="submit" value="Submit" style="height: 50px;" />
                     </div>
                 </div>
@@ -202,22 +206,22 @@
                     <img src="~/assets/img/suncreen.png" alt="sunscreen" style="width:80px;height:80px;"> <br>
                     <nn class="tooltipsc"> Sunscreen attribute<span class="tooltiptext">SPF is a measure of the amount of protection sunscreen can give against UVB radiation. </span></nn>:SPF @ViewBag.spf
                 </p>
-                <p class="linkto">Click <a href="@Url.Action("Suncream", "Home")">here</a> to know more.</p>
+                <p class="linkto">Click <a href="@Url.Action("Suncream", "Protector")">here</a> to know more.</p>
                 <p>
                     <img src="~/assets/img/sunglass.png" alt="sunglass" style="width:80px;height:80px;"> <br>
                     <nn class="tooltipsc">Sunglass category<span class="tooltiptext">According to the degree of sun protection, sunglasses are divided into 5 levels, 5 is the most sun protection.</span></nn>: @ViewBag.len
                 </p>
-                <p class="linkto">Click <a href="@Url.Action("Sunglasses", "Home")">here</a> to know more.</p>
+                <p class="linkto">Click <a href="@Url.Action("Sunglasses", "Protector")">here</a> to know more.</p>
                 <p>
                     <img src="~/assets/img/hat.png" alt="hat" style="width:80px;height:80px;"> <br>
                     <nn class="tooltipsc">Hat type<span class="tooltiptext">Different hat styles can cover different areas and has different sun protection levels.</span></nn>: @ViewBag.hat
                 </p>
-                <p class="linkto">Click <a href="@Url.Action("Hat", "Home")">here</a> to know more.</p>
+                <p class="linkto">Click <a href="@Url.Action("Hat", "Protector")">here</a> to know more.</p>
                 <p>
                     <img src="~/assets/img/cloth.png" alt="clothes and umbrella" style="width:80px;height:80px;"> <br>
                     <nn class="tooltipsc">UPF<span class="tooltiptext">UPF is a standard used to measure the effectiveness of sun protection fabrics.</span></nn> for Clothes and Umbrella: @ViewBag.upf
                 </p>
-                <p class="linkto">Click <a href="@Url.Action("Cloth", "Home")">here</a> to know more.</p>
+                <p class="linkto">Click <a href="@Url.Action("Cloth", "Protector")">here</a> to know more.</p>
             </div>
         </div>
     </div>

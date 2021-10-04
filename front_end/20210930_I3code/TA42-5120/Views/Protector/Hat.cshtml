@@ -14,88 +14,17 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="~/Content/TA42CommonCSS.css" rel="stylesheet" />
     <style>
-        .mySlides {
-            display: none;
-        }
-
-        .carosel_button {
-            border-radius: 15px;
-            background-color: lightgray;
-            color: black;
-            border: none;
-            padding: 16px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            transition-duration: 0.4s;
-            cursor: pointer;
-        }
-
-            .carosel_button:hover {
-                background-color: yellow;
-                color: black;
-            }
-        /* Labels for checked inputs */
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-        }
-
-        input:checked + span {
-            color: darkorange;
-        }
-
-        input[type="checkbox"]:checked {
-            box-shadow: 0 0 0 3px yellow;
-        }
-
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 100px; /* Location of the box */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        }
-
-        /* Modal Content */
         .modal-content {
-            border-radius: 15px;
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
+            width: 850px;
         }
 
-        /* The Close Button */
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-            .close:hover,
-            .close:focus {
-                color: #000;
-                text-decoration: none;
-                cursor: pointer;
-            }
     </style>
 
 
 </head>
-<body style="margin-top: 80px !important">
+<body style="margin-top: 88px !important">
     <!-- Navigation-->
     <!-- Page Header-->
     <!-- Page Header-->
@@ -144,14 +73,48 @@
                                 </div>
                                 <div class='mySlides'>
                                     <h3 class="section-heading" id="tips">Tips for Parents</h3>
-                                    <p><input type="checkbox">&nbsp;<span> Many children do not like to wear hats. Persistence is needed to teach them that a sun protective hat is part of their outside routine. </span></p>
-                                    <p><input type="checkbox">&nbsp;<span> Make sure your children understand that: <i>If a hat is on, the outdoor fun is on!</i></span></p>
-                                    <p><input type="checkbox">&nbsp;<span> Children are more likely to wear their hat if you do too.</span></p>
-                                    <p><input type="checkbox">&nbsp;<span> For babies, choose a fabric that will crumple easily when they put their head down.</span></p>
-                                    <p><input type="checkbox">&nbsp;<span> For younger children choose a hat size that is proportional to the size of their head and provides shade across their face and neck areas.</span></p>
-                                    <p><input type="checkbox">&nbsp;<span> For older children, a bucket hat should have a deep crown and angled brim which is at least 6cm. A wide brimmed hat should have a brim that is at least 7.5cm. The side flap and front peak of a legionnaire hat should meet to protect the side of the face.</span></p>
-                                    <p><input type="checkbox">&nbsp;<span> Hats that can be adjusted at the crown are best. If the hat is secured with a long strap and toggle, ensure it has a safety snap, place the strap at the back of the head or trim the length so it doesn’t become a choking hazard.</span></p>
+                                    <p id="pdf11"><input type="checkbox">&nbsp;<span> Many children do not like to wear hats. Persistence is needed to teach them that a sun protective hat is part of their outside routine. </span></p>
+                                    <p id="pdf12"><input type="checkbox">&nbsp;<span> Make sure your children understand that: <i>If a hat is on, the outdoor fun is on!</i></span></p>
+                                    <p id="pdf13"><input type="checkbox">&nbsp;<span> Children are more likely to wear their hat if you do too.</span></p>
+                                    <p id="pdf14"><input type="checkbox">&nbsp;<span> For babies, choose a fabric that will crumple easily when they put their head down.</span></p>
+                                    <p id="pdf15"><input type="checkbox">&nbsp;<span> For younger children choose a hat size that is proportional to the size of their head and provides shade across their face and neck areas.</span></p>
+                                    <p id="pdf16"><input type="checkbox">&nbsp;<span> For older children, a bucket hat should have a deep crown and angled brim which is at least 6cm. A wide brimmed hat should have a brim that is at least 7.5cm. The side flap and front peak of a legionnaire hat should meet to protect the side of the face.</span></p>
+                                    <p id="pdf17"><input type="checkbox">&nbsp;<span> Hats that can be adjusted at the crown are best. If the hat is secured with a long strap and toggle, ensure it has a safety snap, place the strap at the back of the head or trim the length so it doesn’t become a choking hazard.</span></p>
+                                    <button class="carosel_button" onclick="genPDF1()">Download this note</button>
                                 </div>
+
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+                                <script>
+                                    function genPDF1() {
+                                        var doc = new jsPDF('p', 'in', 'letter')
+
+                                        //first-aid treatment.pdf
+                                        var title1 = document.getElementById("tips").innerHTML;
+                                        var text11 = "1. " + $("#pdf11").text();
+                                        var lines1 = doc.splitTextToSize(text11, 7.5);
+                                        var text12 = "2. " + $("#pdf12").text();
+                                        var lines2 = doc.splitTextToSize(text12, 7.5);
+                                        var text13 = "3. " + $("#pdf13").text();
+                                        var text14 = "4. " + $("#pdf14").text();
+                                        var lines4 = doc.splitTextToSize(text14, 7.5);
+                                        var text15 = "5. " + $("#pdf15").text();
+                                        var lines5 = doc.splitTextToSize(text15, 7.5);
+                                        var text16 = "6. " + $("#pdf16").text();
+                                        var lines6 = doc.splitTextToSize(text16, 7.5);
+                                        var text17 = "7. " + $("#pdf17").text();
+                                        var lines7 = doc.splitTextToSize(text17, 7.5);
+
+                                        doc.text(0.5, 0.5, lines1);
+                                        doc.text(0.5, 1.5, lines2);
+                                        doc.text(0.5, 2.5, text13);
+                                        doc.text(0.5, 3.5, lines4);
+                                        doc.text(0.5, 4.5, lines5);
+                                        doc.text(0.5, 5.5, lines6);
+                                        doc.text(0.5, 7, lines7);
+
+                                        doc.save('Hat Recommendation.pdf');
+                                    }
+                                </script>
                             </div>
                         </div>
                     </div>
