@@ -1,17 +1,17 @@
 ![teamlogo](https://user-images.githubusercontent.com/57879304/136358998-9c1817ea-a8a7-4974-897f-bba80e2ff928.png)
-### Team: TA42-Lemon Lemonade
+### Team: TA42-Lemon Lemonade<br/><br/>
 
 # Table of Content
   - [Introduction](#introduction)
   - [System Architecture](#system-architecture)
   - [Back-End System](#back-end-system)
-  - [Front-End System](front-end-system)
+  - [Front-End System](#front-end-system)
 
 
 
 
 # Introduction
-This a website that provides information on Sunlight Proection.
+This a website that provides information on Sunlight Proection like displaying UV level and predicting UV level etc. It intends to help parents keep their children away from intense sunlight<br/><br/>  
 
 # System Architecture
 
@@ -19,7 +19,7 @@ The Front-End of our website is built using ASP.NET with CSHTML, Javascript and 
 
 The Back-End of our website is built using Python 3.
 
-Both the Front-End and Back-End parts are hosted using Microsoft Azure.
+Both the Front-End and Back-End parts are hosted using Microsoft Azure.<br/><br/> 
 
 ## Back-End System
 
@@ -42,6 +42,16 @@ Flask-Cors==3.0.10
 ```
 
 ## Front-End system
+The assets folder stores all images. Add your personal images to folder and drag to use it.
+![image](https://user-images.githubusercontent.com/57879304/136363838-a52f1c84-2427-4caa-ab64-a85ab3c94965.png)
+
+You can add Macro CSS style on styles.css under Content folder.![image](https://user-images.githubusercontent.com/57879304/136364356-d3db3b66-9e2b-4b6a-9a50-d9f1e5f1081a.png)
+
+If you want to make some changes between front-end and back-end, you can modify by these controllers.
+![image](https://user-images.githubusercontent.com/57879304/136364723-b699e78d-d304-44f2-9e13-33b4ee7d9be7.png)
+
+Using these cshtml files to change the layout of your website. Besides, if you want to make some overall changes, feel free to want to work on _Layout.cshtml file. 
+
 
 The following packages need to be installed for the operation of the Front-End system:
 ```
