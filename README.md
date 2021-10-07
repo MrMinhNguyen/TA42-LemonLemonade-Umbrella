@@ -1,12 +1,19 @@
-
-
-### Project Umbrella
+![teamlogo](https://user-images.githubusercontent.com/57879304/136358998-9c1817ea-a8a7-4974-897f-bba80e2ff928.png)
 ### Team: TA42-Lemon Lemonade
+
+# Table of Content
+  - [Introduction](#introduction)
+  - [System Architecture](#system-architecture)
+  - [Back-End System](#back-end-system)
+  - [Front-End System](front-end-system)
+
+
+
 
 # Introduction
 This a website that provides information on Sunlight Proection.
 
-# System Architecture:
+# System Architecture
 
 The Front-End of our website is built using ASP.NET with CSHTML, Javascript and C#.
 
@@ -14,7 +21,7 @@ The Back-End of our website is built using Python 3.
 
 Both the Front-End and Back-End parts are hosted using Microsoft Azure.
 
-## Back-End system
+## Back-End System
 
 The main Back-End system is run by the app.py file, which initiates a Flask web application.
 
