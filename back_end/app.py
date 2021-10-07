@@ -367,83 +367,117 @@ def uvr_protector():
     uvr_rating = evaluate_uvr(uvr)
 
     result = []
-    
-    # Query data from DB
-    db_connection = connect_to_db()
+    # Get the data
+    try:
+        # Query data from DB
+        db_connection = connect_to_db()
 
-    # Create and execute SQL query
-    db_cursor = db_connection.cursor()
+        # Create and execute SQL query
+        db_cursor = db_connection.cursor()
 
-    # Find the hats
-    db_cursor.execute("SELECT * FROM hat WHERE UVR='"+uvr_rating+"'")
-    records = db_cursor.fetchall()
-    
-    # Compose result data
-    for rec in records:
-        result.append({
-            'type': 'hat',
-            'hat_type': rec[2],
-            'forehead': rec[3],
-            'cheek': rec[4],
-            'nose': rec[5],
-            'ear': rec[6],
-            'chin': rec[7],
-            'neck': rec[8],
-        })
-    
-    # Find the sunglasses
-    db_cursor.execute("SELECT * FROM sunglasses WHERE UVR='"+uvr_rating+"'")
-    records = db_cursor.fetchall()
-    
-    # Compose result data
-    for rec in records:
-        result.append({
-            'type': 'sunglasses',
-            'lens_category': rec[2],
-            'function': rec[3],
-            'situation': rec[4],
-            'glare': rec[5]
-        })
+        # Find the hats
+        db_cursor.execute("SELECT * FROM hat WHERE UVR='"+uvr_rating+"'")
+        records = db_cursor.fetchall()
+        
+        # Compose result data
+        for rec in records:
+            result.append({
+                'type': 'hat',
+                'hat_type': rec[2],
+                'forehead': rec[3],
+                'cheek': rec[4],
+                'nose': rec[5],
+                'ear': rec[6],
+                'chin': rec[7],
+                'neck': rec[8],
+            })
+        
+        # Find the sunglasses
+        db_cursor.execute("SELECT * FROM sunglasses WHERE UVR='"+uvr_rating+"'")
+        records = db_cursor.fetchall()
+        
+        # Compose result data
+        for rec in records:
+            result.append({
+                'type': 'sunglasses',
+                'lens_category': rec[2],
+                'function': rec[3],
+                'situation': rec[4],
+                'glare': rec[5]
+            })
 
-    # Find the sunscreen
-    db_cursor.execute("SELECT * FROM sunscreen WHERE UVR='"+uvr_rating+"'")
-    records = db_cursor.fetchall()
-    
-    # Compose result data
-    for rec in records:
-        if rec[2] == '1':
-            pa_str = 'PA+'
-        elif rec[2] == '2':
-            pa_str = 'PA++'
-        elif rec[2] == '3':
-            pa_str = 'PA+++'
-        elif rec[2] == '4':
-            pa_str = 'PA++++'
-        else:
-            pa_str = 'PA+'
+        # Find the sunscreen
+        db_cursor.execute("SELECT * FROM sunscreen WHERE UVR='"+uvr_rating+"'")
+        records = db_cursor.fetchall()
+        
+        # Compose result data
+        for rec in records:
+            if rec[2] == '1':
+                pa_str = 'PA+'
+            elif rec[2] == '2':
+                pa_str = 'PA++'
+            elif rec[2] == '3':
+                pa_str = 'PA+++'
+            elif rec[2] == '4':
+                pa_str = 'PA++++'
+            else:
+                pa_str = 'PA+'
 
-        result.append({
-            'type': 'sunscreen',
-            'PA': pa_str,
-            'desc': rec[3],
-            'SPF': rec[4],
-            'UVB_percentage': rec[5],
-            'situation': rec[6]
-        })
+            result.append({
+                'type': 'sunscreen',
+                'PA': pa_str,
+                'desc': rec[3],
+                'SPF': rec[4],
+                'UVB_percentage': rec[5],
+                'situation': rec[6]
+            })
 
-    # Find the clohtes
-    db_cursor.execute("SELECT * FROM umbrella_clothes WHERE UVB='"+uvr_rating+"'")
-    records = db_cursor.fetchall()
-    
-    # Compose result data
-    for rec in records:
-        result.append({
-            'type': 'umbrella_clothes',
-            'UPF': rec[2],
-            'UVB_percentage': rec[3]
-        })
-
-    return str(result)
+        # Find the clohtes
+        db_cursor.execute("SELECT * FROM umbrella_clothes WHERE UVB='"+uvr_rating+"'")
+        records = db_cursor.fetchall()
+        
+        # Compose result data
+        for rec in records:
+            result.append({
+                'type': 'umbrella_clothes',
+                'UPF': rec[2],
+                'UVB_percentage': rec[3]
+            })
+    # Return defalut data if error occurs
+    except Exception:
+        result = [
+            {
+                'type': 'hat', 
+                'hat_type': 'Not needed', 
+                'forehead': 0, 'cheek': 0, 
+                'nose': 0, 'ear': 0, 
+                'chin': 0, 
+                'neck': 0
+            }, 
+            {
+                'type': 'sunglasses', 
+                'lens_category': 1, 
+                'function': 'Fashion spectacles', 
+                'situation': 'Partly cloudy days', 
+                'glare': 'limited sun glare reduction,not suitable for driving at night'
+            }, 
+            {
+                'type': 'sunscreen', 
+                'PA': 'PA+', 
+                'desc': 'Moderate UVA protection.', 
+                'SPF': 8, 
+                'UVB_percentage': 87.5, 
+                'situation': None
+            }, 
+            {
+                'type': 'umbrella_clothes', 
+                'UPF': '10 to 19', 
+                'UVB_percentage': '10 to 5.1'
+            }
+        ]
+    # Always return data instead of error
+    finally:
+        return str(result)
 
 
 # API to return 1 single protector (Iteration 1)
@@ -613,25 +647,40 @@ def all_protectors():
 def uvr_location_i2():
 
     postcode = request.args.get('postcode')
-    
+
     # Get coordinates from database
     PARAMS = find_coordinate(postcode)[0]
     suburb_info = find_coordinate(postcode)[1]
 
-    # Send API request to OpenUV
-    req = requests.get(url=OPENUV_URL_RECENT, params=PARAMS, headers={"x-access-token": get_api_key()})
-    data = json.loads(req.text)
-    
-    # Compose and return result data
-    result = {
-        'postcode': postcode,
-        'suburb': suburb_info['name'],
-        'UVR': data['result']['uv'],
-        'max_UVR': data['result']['uv_max'],
-        'lat': PARAMS['lat'],
-        'lng': PARAMS['lng']
-    }
-    return str(result)
+    # Get the data
+    try:
+        # Send API request to OpenUV
+        req = requests.get(url=OPENUV_URL_RECENT, params=PARAMS, headers={"x-access-token": get_api_key()})
+        data = json.loads(req.text)
+        
+        # Compose and return result data
+        result = {
+            'postcode': postcode,
+            'suburb': suburb_info['name'],
+            'UVR': data['result']['uv'],
+            'max_UVR': data['result']['uv_max'],
+            'lat': PARAMS['lat'],
+            'lng': PARAMS['lng']
+        }
+    # Use default data if error
+    except Exception:
+        # Compose and return result data
+        result = {
+            'postcode': postcode,
+            'suburb': suburb_info['name'],
+            'UVR': 0,
+            'max_UVR': 6,
+            'lat': PARAMS['lat'],
+            'lng': PARAMS['lng']
+        }
+    # Always return data instead of error
+    finally:
+        return str(result)
 
 
 # API to get historical UVR group by Months (Iteration 2)
@@ -748,30 +797,93 @@ def quiz_i2():
     
     result = []
 
-    # Query data from DB
-    db_connection = connect_to_db()
+    # Get the data
+    try:
+        # Query data from DB
+        db_connection = connect_to_db()
 
-    # Create and execute SQL query
-    db_cursor = db_connection.cursor()
+        # Create and execute SQL query
+        db_cursor = db_connection.cursor()
 
-    # Get 1 random question for each topic
-    for topic in all_topics:
-        db_cursor.execute("SELECT * FROM quiz WHERE Topic='{}' ORDER BY RAND() LIMIT 1".format(topic))
-        records = db_cursor.fetchall()
+        # Get 1 random question for each topic
+        for topic in all_topics:
+            db_cursor.execute("SELECT * FROM quiz WHERE Topic='{}' ORDER BY RAND() LIMIT 1".format(topic))
+            records = db_cursor.fetchall()
 
-        # Compose the result
-        for rec in records:
-            result.append({
-                'topic': rec[1],
-                'question': rec[2],
-                'answer': rec[3],
-                'explanation': rec[4],
-                'selection_1': rec[5],
-                'selection_2': rec[6]
-            })
-
-    # Return the result
-    return str(result)
+            # Compose the result
+            for rec in records:
+                result.append({
+                    'topic': rec[1],
+                    'question': rec[2],
+                    'answer': rec[3],
+                    'explanation': rec[4],
+                    'selection_1': rec[5],
+                    'selection_2': rec[6]
+                })
+    # Return default data if error
+    except Exception:
+        result = [
+            {
+                'topic': 'Eye_dmg', 
+                'question': 'I should avoid to look directly at the sun.', 
+                'answer': 'True', 
+                'explanation': 'While you might not feel any pain or sense any damage as you gaze at the sun, you eyes are exposed to more UV rays and the risk of damage to your eyes increases.', 
+                'selection_1': 'True', 
+                'selection_2': 'False'
+            }, 
+            {
+                'topic': 'Skin_dmg', 
+                'question': 'As children, I don’t need special attention to UV rays from sun.', 
+                'answer': 'False', 
+                'explanation': "Children require special attention, since we tend to spend more time outdoors and can\nburn more easily as young skin is easily damaged by sun exposure.\nOne blistering sunburn can double a child's chances of developing Skin cancer later in life.", 
+                'selection_1': 'True', 
+                'selection_2': 'False'
+            }, 
+            {
+                'topic': 'Sunscreen', 
+                'question': "If I'm wearing sunscreen, I can stay in the sun as long as I want.", 
+                'answer': 'False', 
+                'explanation': 'Sunscreen does not provide 100% protection, it should not be used as a way to prolong your time in the sun. Even with proper sunscreen use, some UV rays still get through. Also, sunscreen will fade off of your skin by time. Remember to reapply sunscreen every two hours.', 
+                'selection_1': 'True', 
+                'selection_2': 'False'
+            }, 
+            {
+                'topic': 'Sunglasses', 
+                'question': 'I have a pair of toy sunglasses, I should wear it because it can protect me from UV rays.', 
+                'answer': 'False', 
+                'explanation': 'Do not use toy sunglasses for your children, as they do not meet the sun protection requirements under the Australian Standard.', 
+                'selection_1': 'True', 
+                'selection_2': 'False'
+            }, 
+            {
+                'topic': 'Hat', 
+                'question': 'A baseball\ncap doesn’t provide enough\nsun protection.', 
+                'answer': 'True', 
+                'explanation': 'It only protects part\nof your head and face but\nnot all of it', 
+                'selection_1': 'True', 
+                'selection_2': 'False'
+            }, 
+            {
+                'topic': 'Cloth', 
+                'question': 'Wear a t-shirt is better than singlet top when I am playing outside.', 
+                'answer': 'True', 
+                'explanation': ' Because a t-shirt can\ncovers more skin.', 
+                'selection_1': 'True', 
+                'selection_2': 'False'
+            }, 
+            {
+                'topic': 'UVR', 
+                'question': 'Can UV radiation be seen\nor felt?', 
+                'answer': 'False', 
+                'explanation': 'UV radiation can not be seen\nor felt.', 
+                'selection_1': 'True', 
+                'selection_2': 'False'
+            }
+        ]
+    # Always return data instead of error
+    finally:
+        # Return the result
+        return str(result)
 
 
 # ------------------------------------- ITERATION 3 -------------------------------------
@@ -866,7 +978,7 @@ def next_5days_i3():
             result.append({
                 "suburb": suburb_name,
                 "date": convert_date(to_day + datetime.timedelta(days=d)),
-                "max_uvr": "Unkown",
+                "max_uvr": "Unknown",
                 "excellent_activites": ["Stay Home"],
                 "poor_activites": ["Go Out"],
             })
