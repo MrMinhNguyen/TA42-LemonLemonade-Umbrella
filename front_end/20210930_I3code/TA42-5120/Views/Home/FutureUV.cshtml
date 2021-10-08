@@ -42,6 +42,7 @@
             text-align: center;
             padding: 8px;
             font-size: 20px;
+
         }
 
         #futureTable tr td:nth-child(1) {
@@ -149,8 +150,8 @@
                                             <form action="javascript:get_futures()" class="domain-form">
                                                 <div class="form-group d-md-flex">
                                                     
-                                                    <input id="postcode" type="text" class="form-control" required pattern="3[0-9]{3}" style="height: 50px; min-width:550px; " value="" placeholder="Search for UV levels by VIC postcode (3000-3999)" aria-label="Search" />
-                                                    <input type="submit" class="carosel_button" value="Search">
+                                                    <input id="postcode" type="text" class="form-control" required pattern="3[0-9]{3}" style="height: 50px; min-width:450px; margin-bottom: 20px;" value="" placeholder="Search for UV levels by VIC postcode (3000-3999)" aria-label="Search" />
+                                                    <input type="submit" class="carosel_button" style=" margin-top: 0px; height: 50px; margin-bottom: 0px; margin-left: 10px;" value="Search">
                                                 </div>
                                             </form>
                                         </div>
@@ -198,6 +199,30 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            <script>
+                                                function myFunction(value) {
+                                                    switch (true) {
+                                                        case (value <= 2): return '#04b617';
+                                                        case (value <= 5): return '#ffec00';
+                                                        case (value <= 7): return '#ff8e00';
+                                                        case (value <= 10): return '#c62f2f';
+                                                        case (value > 10): return '#7f06bb';
+                                                    }
+                                                }
+                                                var value;
+                                                value = document.getElementById("uv_1").value;
+                                                document.getElementById("uv_1").text - decoration = underline;
+                                                document.getElementById("uv_1").style.text - decoration - color = myFunction(value);
+
+                                                value = document.getElementById("uv_2").value;
+                                                document.getElementById("uv_2").text - decoration = underline;
+                                                document.getElementById("uv_2").style.text - decoration - color = myFunction(value);
+
+                                                alue = document.getElementById("uv_3").value;
+                                                document.getElementById("uv_3").text - decoration = underline;
+                                                document.getElementById("uv_3").style.text - decoration - color = myFunction(value);
+                                            </script>
+                                            <p><img src="~/assets/img/UVLevel2.png" alt="UVrange" style="width:100%;height:60px;"></p>
                                         </div>
                                     </div>
                                     <div id="modal_0" class="modal">
