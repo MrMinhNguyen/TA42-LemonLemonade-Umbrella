@@ -6,6 +6,7 @@
   - [System Architecture](#system-architecture)
   - [Back-End System](#back-end-system)
   - [Front-End System](#front-end-system)
+  - [Contributors](#contributors)
 
 
 
@@ -74,5 +75,5 @@ Newtonsoft.Json==13.0.1
 WebGrease==1.6.0
 ```
 <br/><br/><br/>
-## Contributers
+## Contributors
 ![GitHub Contributors Image](https://contrib.rocks/image?repo=MrMinhNguyen/TA42-LemonLemonade-Umbrella)
