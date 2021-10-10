@@ -123,6 +123,7 @@ input[type="checkbox"]:checked {
     text-align: right;
     font-size: 15px;
     color: gray;
+    margin-top: 3px;
 }
 
 
@@ -153,3 +154,42 @@ input[type="checkbox"]:checked {
     .tooltipsc:hover .tooltiptext {
         visibility: visible;
     }
+
+/*Scary picture warning*/
+.scaryPic {
+    position: relative;
+}
+
+    .scaryPic img {
+        filter: grayscale(1);
+    }
+
+    .scaryPic .picText {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        visibility: visible;
+        color: red;
+        font-size: 15px;
+        margin: 0px;
+        width: 250px;
+        background: black;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .scaryPic:hover img {
+        filter: grayscale(0);
+    }
+
+    .scaryPic:hover .picText {
+        visibility: hidden;
+    }
+
+/*Back to top text style*/
+.toTop a {
+    text-align: right;
+    text-decoration: underline;
+    color: #1266f1;
+}

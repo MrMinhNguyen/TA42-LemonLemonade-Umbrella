@@ -22,7 +22,7 @@
 
     <style>
         body {
-            margin-top: 88px !important;
+            margin-top: 95px !important;
         }
 
         input[type=text] {
@@ -66,6 +66,7 @@
             margin-left: 8%;
             padding: 2px;
             background-color: white;
+            height: 120px;
         }
 
         .uvhead {
@@ -156,6 +157,7 @@
                 <div class="container border">
                     <br>
                     <h4 class="uvhead">Current <nn class="tooltipsc">UV Index<span class="tooltiptext">UV index is a measurement to indicate the level of UV radiation during a day.</span></nn> in @ViewBag.su1   </h4>
+                    <p style="text-align: right; color: #241002; font-size: 14px;">*This data is updated in real time.</p>
                     <div class="row">
                         <div class="col-sm-4 insiderow shadow" id="UVbd1">
                             <p class="uvhead">Current<br>UV index</p>
@@ -163,7 +165,7 @@
                         </div>
 
                         <div class="col-sm-4 insiderow shadow" id="UVbd2">
-                            <p class="uvhead ">Max<br>UV index today</p>
+                            <p class="uvhead ">Today's Max<br>UV index until now</p>
                             <p class="uvtext" id="UVmax">@ViewBag.uvrmax1 </p>
                         </div>
 
