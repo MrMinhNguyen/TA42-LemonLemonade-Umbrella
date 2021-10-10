@@ -20,6 +20,51 @@
         .modal-content {
             width: 650px;
         }
+        .flip-card {
+            background-color: transparent;
+            width: 300px;
+            height: 200px;
+            border: 1px solid #f1f1f1;
+            perspective: 1000px; /* Remove this if you don't want the 3D effect */
+        }
+
+        /* This container is needed to position the front and back side */
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        /* Do an horizontal flip when you move the mouse over the flip box container */
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Position the front and back side */
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+        }
+
+        /* Style the front side (fallback if image is missing) */
+        .flip-card-front {
+            background-color: #bbb;
+            color: black;
+        }
+
+        /* Style the back side */
+        .flip-card-back {
+            background-color: #ffc107;
+            color: black;
+            transform: rotateY(180deg);
+        }
+
 
     </style>
 </head>
@@ -77,57 +122,162 @@
                                 <div class='mySlides'>
                                     <h3 id="materials">Choose the right materials to protect your children from UV</h3>
                                     <br>
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Attribute</th>
-                                                <th scope="col">Note</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td scope="row">Coverage</td>
-                                                <td>Choose long sleeves, skirts and pants which can cover more skin so that you have better protection.</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">Weave</td>
-                                                <td>The tighter the fabric structure, the less UV radiation passes through, the better the sun protection.</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">Color</td>
-                                                <td>Dark colors absorb ultraviolet rays more strongly than the lighter shades on the same fabric, which increases sun protection.</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">Weight</td>
-                                                <td>The heavier of the same fabric, the lesser UVR it can against.</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">Stretch</td>
-                                                <td>The greater the stretch or tension put on a textile, the lower the UPF rating.</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">Water</td>
-                                                <td>When some fabrics have absorbed water, they will provide less protection against UVR, such as polyester and cotton. Choosing a fabric that provides effective protection from UV but dries quickly will help minimise the effect of moisture.</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">Washing</td>
-                                                <td>Cotton-based fabrics tend to shrink after the first washing, thereby tightening the weave and reducing the transmitted ultraviolet radiation. So old, threadbare or faded clothes may offer decreased protection over time.</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">Additives</td>
-                                                <td>UVR stabilizers or additives can be added to a range of textiles to improve their sun protection.</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">Layering</td>
-                                                <td>Increasing UV protection by layering materials and clothes is a good idea.</td>
-                                            </tr>
-                                            <tr>
-                                                <td scope="row">UV absorbers</td>
-                                                <td>Some clothing has been modified to absorb more UV light.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <p><b>Check the label on your clothes to check if they've been treated, and then follow the care instructions.</b></p>
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+                                                        <img src="~/assets/img/mediamodifier-7cERndkOyDw-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Coverage</h3>
+                                                        <p>Choose long sleeves, skirts and pants which can cover more skin to have better protection.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+                                                        <img src="~/assets/img/kate-mclean-jZSL_Dt4Fes-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Weave</h3>
+                                                        <p>The tighter the fabric structure, the less UV radiation passes through, the better the sun protection.<p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+                                                        <img src="~/assets/img/hossein-azarbad-AKtA4hj0gII-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Color</h3>
+                                                        Dark colors absorb ultraviolet rays more strongly than the lighter shades, which increases sun protection.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+
+                                                        <img src="~/assets/img/waldemar-brandt-cue0DuZ8cUU-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Weight</h3>
+                                                        The heavier of the same fabric, the lesser UVR it can against.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+                                                        <img src="~/assets/img/littpro-inc-BYFiSy0pGLc-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Stretch</h3>
+                                                        <p>The greater the stretch or tension put on a textile, the lower the UPF rating.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+
+                                                        <img src="~/assets/img/micaela-parente-g0vUgv-w5g4-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Water</h3>
+                                                        Some fabrics will provide less protection again UVR after absorbing water. So choose one providing protections from UV and dries quickly.
+                                                        ;oi
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+
+                                                        <img src="~/assets/img/engin-akyurt-yCYVV8-kQNM-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Washing</h3>
+                                                        <p>Cotton-based fabrics tend to shrink after the first washing, thereby reducing the transmitted ultraviolet radiation. </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+
+                                                        <img src="~/assets/img/mike-petrucci-f6Xv0xs9JWg-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Addictives</h3>
+                                                        <p>UVR stabilizers or additives can be added to a range of textiles to improve their sun protection.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+                                                        <img src="~/assets/img/waldemar-brandt-5hDqrxz5Rpc-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Layering</h3>
+                                                        <p>Increasing UV protection by layering materials and clothes is a good idea.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+
+                                                        <img src="~/assets/img/mecca-rash-vest-600x452.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>UV absorbers</h3>
+                                                        <p>Some clothing has been modified to absorb more UV light.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <p><b>Check the label on your clothes to ensure if they've been treated, and then follow the care instructions.</b></p>
                                 </div>
                                 <div class='mySlides'>
                                     <h3 id="tips">Tips for parents</h3>

@@ -210,14 +210,14 @@
     </style>
 </head>
 
-<body style="margin-top: 95px !important">
+<body style="margin-top: 100px !important">
     <!-- Page Header-->
     <header class="masthead" style="background-image: url('../../assets/img/quiz_title1.png'); ">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-10 col-xl-10">
                     <div class="page-heading">
-                        <h1 style="color: #ffc107">Sun Safety Quiz</h1>
+                        <h1 id="top" style="color: #ffc107">Sun Safety Quiz</h1>
                         <br />
                         <span class="subheading">Let's check on the knowledge about UV rays and sun protection</span>
                         <br />
@@ -236,11 +236,11 @@
                         <div id="results" class="text-align"></div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-center"> <button id="submit" class="carosel_button"> SUBMIT</button> </div>
+                <div class="d-flex justify-content-center"> <button id="submit" class="carosel_button" style="margin-top:20px;"> SUBMIT</button> </div>
             </div>
         </div>
     </div>
-    
+
     <div id="modal_result" class="modal">
         <div class="modal-content">
             <span class="close" id="close_result">&times;</span>
@@ -249,6 +249,7 @@
             <span id="congrat_img"></span>
         </div>
     </div>
+    <p style="text-align:right;"><a href="#top">Click to back to top</a></p>
 
     <script>
         (function () {
@@ -426,14 +427,16 @@
                     const userAnswer = (answerContainer.querySelector(selector) || {}).value;
                     console.log(userAnswer);
                     console.log(currentQuestion.answer);
-                    
+
                     // if answer is correct
                     if (userAnswer === currentQuestion.answer) {
                         // add to the number of correct selections
                         numCorrect++;
                         // color the selections green
                         answerContainers[questionNumber].style.color = 'green';
-                    }
+explainContainers[questionNumber].getElementsByClassName("explanation")[0].style.display = 'block';
+                        explainContainers[questionNumber].getElementsByClassName("explanation")[0].innerHTML = `<i class="fas fa-check" style="color:green"></i>`+' Your answer is correct.';
+                                           }
                     // if answer is wrong or blank
                     else {
                         // color the selections red
@@ -442,11 +445,12 @@
                         Array.prototype.forEach.call(all_ele, function (ele) {
                             ele.style.display = 'block';
                         });
+                        explainContainers[questionNumber].getElementsByClassName("explanation")[0].innerHTML = `<i class="fas fa-times" style="color:red"></i>`+'Your answer is wrong.';
                     }
                 });
 
                 // show number of correct selections out of total
-                resultsContainer.innerHTML = `You have ${numCorrect} answer(s) correct.`;
+                resultsContainer.innerHTML = `You have ${numCorrect} correct answer(s).`;
 
                 // Show the pop-up message
                 document.getElementById('congrat').innerHTML = `<h3 class="congrat_text"><b>${mark_result(numCorrect)}</b></h3>`;
