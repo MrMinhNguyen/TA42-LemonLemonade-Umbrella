@@ -67,6 +67,21 @@ def connect_to_db():
         database=db_info['db_name']
     )
 
+# Function to verify if the inout is a postcode or a date
+def verify_input(value, is_number=True):
+    # Verify postcode or uvr
+    if is_number:
+        try: 
+            float(value)
+        except Exception:
+            raise Exception
+    # Verify date
+    else:
+        try:
+            parser.parse(value, fuzzy=False)
+        except Exception:
+            raise Exception
+
 
 # This function find the given suburb info from the database
 def find_coordinate(postcode):
@@ -75,6 +90,10 @@ def find_coordinate(postcode):
     
     # If valid post code then return actual result
     try:
+        # Verify postcode before create SQL query
+        verify_input(postcode)
+
+        # Get data using SQL query
         db_cursor.execute("SELECT * FROM suburbs WHERE postcode="+postcode)
         record = db_cursor.fetchall()[0]
         coord = {
@@ -202,7 +221,6 @@ def round_minute(hour_minute, forward=True):
             return str(hour) + ":45"
 
 
-
 # -----------------------------------------------------------------------
 # ------------------------ Create the Aplication ------------------------
 # -----------------------------------------------------------------------
@@ -222,7 +240,7 @@ CORS(app)
 def uvr_location():
 
     postcode = request.args.get('postcode')
-    
+
     # Get coordinates from database
     PARAMS = find_coordinate(postcode)[0]
     suburb_info = find_coordinate(postcode)[1]
@@ -363,12 +381,15 @@ def uvr_by_year():
 @app.route('/uvr_protector')
 def uvr_protector():
 
-    uvr = float(request.args.get('uvr'))
-    uvr_rating = evaluate_uvr(uvr)
-
+    uvr = request.args.get('uvr')
     result = []
+
     # Get the data
     try:
+        # Verify the UVR
+        uvr = float(uvr)
+        uvr_rating = evaluate_uvr(uvr)
+
         # Query data from DB
         db_connection = connect_to_db()
 
@@ -1000,6 +1021,9 @@ def forecast_1day_i3():
     
     # Get data
     try:
+        # Verify the date input
+        verify_input(day, is_number=False)
+
         # Send API request to AccuWeather to get activities
         req = requests.get(url=OPENUV_URL_FORECAST, params=PARAMS, headers={"x-access-token": get_api_key()})
         data = json.loads(req.text)["result"]
