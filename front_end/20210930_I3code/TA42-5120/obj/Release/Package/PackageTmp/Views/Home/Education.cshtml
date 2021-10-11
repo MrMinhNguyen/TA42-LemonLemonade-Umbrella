@@ -106,6 +106,10 @@
             border: 1px solid #ddd
         }
 
+        .state {
+            display:none;
+        }
+
         #one:checked ~ label.first,
         #two:checked ~ label.second,
         #three:checked ~ label.third,
@@ -336,21 +340,25 @@
                         `<label><input type="radio" name="question${questionNumber}" value="${currentQuestion.selection_2}">${currentQuestion.selection_2}</label>`
                     );
 
+explains.push(
+                        `<div class="state"></div>`,
+                    );
+
                     var topic = `${currentQuestion.topic}`;
                     if (topic === 'Eye damage')
-                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Eyedamage", "DamTre")"> ${currentQuestion.topic}</a></div>`);
+                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Eyedamage", "DamTre")"  target="_blank"> ${currentQuestion.topic}</a></div>`);
                     if (topic === 'Skin damage')
-                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Skindamage", "DamTre")"> ${currentQuestion.topic}</a></div>`);
+                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Skindamage", "DamTre")" target="_blank"> ${currentQuestion.topic}</a></div>`);
                     if (topic === 'Sunscreen')
-                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Suncream", "Protector")"> ${currentQuestion.topic}</a></div>`);
+                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Suncream", "Protector")" target="_blank"> ${currentQuestion.topic}</a></div>`);
                     if (topic === 'Sunglasses')
-                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Sunglasses", "Protector")"> ${currentQuestion.topic}</a></div>`);
+                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Sunglasses", "Protector")"  target="_blank"> ${currentQuestion.topic}</a></div>`);
                     if (topic === 'Cloth')
-                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Cloth", "Protector")"> ${currentQuestion.topic}</a></div>`);
+                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Cloth", "Protector")" target="_blank"> ${currentQuestion.topic}</a></div>`);
                     if (topic === 'UVR')
-                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Index", "Home")"> ${currentQuestion.topic}</a></div>`);
+                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Index", "Home")" target="_blank"> ${currentQuestion.topic}</a></div>`);
                     if (topic === 'Hat')
-                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Hat", "Protector")"> ${currentQuestion.topic}</a></div>`);
+                        explains.push(`<div class="explanation"> Topic:<a href= "@Url.Action("Hat", "Protector")" target="_blank"> ${currentQuestion.topic}</a></div>`);
 
                     explains.push(
                         `<div class="explanation"> Hint: ${currentQuestion.explanation}</div>`,
@@ -432,25 +440,32 @@
                     if (userAnswer === currentQuestion.answer) {
                         // add to the number of correct selections
                         numCorrect++;
-                        // color the selections green
+                         // color the selections green
                         answerContainers[questionNumber].style.color = 'green';
-explainContainers[questionNumber].getElementsByClassName("explanation")[0].style.display = 'block';
-                        explainContainers[questionNumber].getElementsByClassName("explanation")[0].innerHTML = `<i class="fas fa-check" style="color:green"></i>`+' Your answer is correct.';
+                        explainContainers[questionNumber].getElementsByClassName("state")[0].style.display = 'block';
+                        explainContainers[questionNumber].getElementsByClassName("state")[0].style.color = 'green';
+                        explainContainers[questionNumber].getElementsByClassName("state")[0].innerHTML = `<i class="fas fa-check" style="color:green"></i>`+' Your answer is correct.';
                                            }
                     // if answer is wrong or blank
                     else {
-                        // color the selections red
+                     // color the selections red
                         answerContainers[questionNumber].style.color = 'red';
-                        var all_ele = explainContainers[questionNumber].getElementsByClassName("explanation")
+                        //explainContainers[questionNumber].getElementsByClassName("explanation")[0].innerHTML = '';
+                        var all_ele = explainContainers[questionNumber].getElementsByClassName("explanation");
+                       
                         Array.prototype.forEach.call(all_ele, function (ele) {
+                         
                             ele.style.display = 'block';
+                            //ele.innerHTML = `<i class="fas fa-times" style="color:red"></i>` + 'Your answer is incorrect.' + `<br>` + ele.innerHTML;
                         });
-                        explainContainers[questionNumber].getElementsByClassName("explanation")[0].innerHTML = `<i class="fas fa-times" style="color:red"></i>`+'Your answer is wrong.';
+                        explainContainers[questionNumber].getElementsByClassName("state")[0].style.display = 'block';
+                        explainContainers[questionNumber].getElementsByClassName("state")[0].innerHTML = `<i class="fas fa-times" style="color:red"></i>` + 'Your answer is incorrect.' + `<br>`;
+                        explainContainers[questionNumber].getElementsByClassName("state")[0].style.color = 'red';
                     }
                 });
 
-                // show number of correct selections out of total
-                resultsContainer.innerHTML = `You have ${numCorrect} correct answer(s).`;
+                    // show number of correct selections out of total
+                resultsContainer.innerHTML = `You have ${numCorrect} answer(s) correct.`;
 
                 // Show the pop-up message
                 document.getElementById('congrat').innerHTML = `<h3 class="congrat_text"><b>${mark_result(numCorrect)}</b></h3>`;
