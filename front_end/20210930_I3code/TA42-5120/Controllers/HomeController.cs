@@ -155,7 +155,7 @@ namespace TA42_5120.Controllers
                 //question for cloth
                 string cloth = question[5];
                 JObject json6 = JObject.Parse(cloth);
-                string topic6 = Convert.ToString(json6["topic"]);
+                string topic6 = Convert.ToString(json6["topic"])+ "es";
                 string question6 = "6. "+ Convert.ToString(json6["question"]);
                 string answer6 = Convert.ToString(json6["answer"]);
                 string explanation6 = Convert.ToString(json6["explanation"]);
