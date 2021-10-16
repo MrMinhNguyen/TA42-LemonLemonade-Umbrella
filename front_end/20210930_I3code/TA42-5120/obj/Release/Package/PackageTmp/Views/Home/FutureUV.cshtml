@@ -1,0 +1,776 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Future UV</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="~/Content/TA42CommonCSS.css" rel="stylesheet" />
+
+    <style>
+
+
+        .center1 {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+
+
+        /* Future UV table */
+        table {
+            border-collapse: collapse;
+            width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: rgb(255, 255, 255);
+        }
+
+        td,
+        th {
+            border: 1px solid #000000;
+            text-align: center;
+            padding: 8px;
+            font-size: 20px;
+        }
+
+        #futureTable tr td:nth-child(1) {
+            text-align: left !important;
+        }
+
+        /* Learn more button */
+        .modal {
+            padding-top: 50px; /* Location of the box */
+        }
+
+        .modal-content {
+            width: 800px;
+        }
+
+
+        thead {
+            font-weight: bold;
+        }
+
+        tr {
+        }
+
+        .form-control {
+            height: 55px;
+            display: inline-block;
+            background: #fff;
+            color: black;
+            font-size: 18px;
+            border-radius: 0px;
+            -webkit-box-shadow: none;
+            box-shadow: none
+        }
+
+        .domain-form .form-group {
+            color: #fff;
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            -ms-border-radius: 0;
+            border-radius: 0
+        }
+
+        .hidden_table {
+            display: none;
+        }
+
+        .activity_img {
+            width: 70px;
+            height: 70px;
+        }
+
+        .activity_table {
+            border: none;
+        }
+
+            .activity_table tr {
+                border: none;
+            }
+
+            .activity_table td {
+                border: none;
+            }
+
+        ol li a {
+            color: #1266f1 !important;
+            text-decoration: underline !important;
+        }
+    </style>
+</head>
+
+<body style="margin-top: 88px !important">
+    <header class="masthead" style="background-image: url('../../assets/img/forecast.png')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-10 col-xl-10">
+                    <div class="page-heading">
+                        <h1>UV Index Forecast</h1><br />
+                        <span class="subheading">Let's schedule a healthy exercise plan for your children</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="row d-flex justify-content-center mt-5">
+                <div class="col-lg-10">
+                    <div class="card mb-3">
+                        <div class="card-body p-5 ">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-lg-10">
+                                    <!--Header-->
+                                    <h5 class="text-center py-3" style="font-weight: bold;">
+                                        Forecast the
+                                        <span class="tooltipsc">
+                                            UV Index
+                                            <span class="tooltiptext">
+                                                UV index is a measurement to indicate the level of Ultraviolet radiation during a day.
+                                            </span>
+                                        </span>
+                                        in the future
+                                    </h5>
+
+
+                                    <div class="col-lg-10 offset-md-1" style="height:700px;">
+                                        <div class="col-md-6">
+                                            <form action="javascript:get_futures()" class="domain-form">
+                                                <div class="form-group d-md-flex">
+
+                                                    <input id="postcode" type="text" class="form-control" required pattern="3[0-9]{3}" style="height: 50px; min-width:450px; margin-bottom: 20px;" value="" placeholder="Search for UV levels by VIC postcode (3000-3999)" aria-label="Search" />
+                                                    <input type="submit" class="carosel_button" style=" margin-top: 0px; height: 50px; margin-bottom: 0px; margin-left: 10px;" value="Search">
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div id="future_table" class="hidden_table">
+                                            <h5 class="text-center pt-5" style="font-weight: bold;">The maximum UV index in the next five days in would be</h5>
+                                            <p style="text-align: right; color: #241002; font-size: 14px; margin:5px;">*Data is updated in real time.</p>
+                                            <table id="future_table" class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Max UVR</th>
+                                                        <th scope="col">Level</th>
+                                                        <th scope="col">Advanced</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td scope="row" id="date_0"></td>
+                                                        <td id="uv_0"></td>
+                                                        <td id="level_0"></td>
+                                                        <td><button class="carosel_button" id="button_0">Learn More</button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="row" id="date_1"></td>
+                                                        <td id="uv_1"></td>
+                                                        <td id="level_1"></td>
+                                                        <td><button class="carosel_button" id="button_1">Learn More</button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="row" id="date_2"></td>
+                                                        <td id="uv_2"></td>
+                                                        <td id="level_2"></td>
+                                                        <td><button class="carosel_button" id="button_2">Learn More</button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="row" id="date_3"></td>
+                                                        <td id="uv_3"></td>
+                                                        <td id="level_3"></td>
+                                                        <td><button class="carosel_button" id="button_3">Learn More</button></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="row" id="date_4"></td>
+                                                        <td id="uv_4"></td>
+                                                        <td id="level_4"></td>
+                                                        <td><button class="carosel_button" id="button_4">Learn More</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <p><img src="~/assets/img/UVLevel2.png" alt="UVrange" style="width:100%;height:60px;"></p>
+
+                                        </div>
+                                    </div>
+                                    <div id="modal_0" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" id="close_0">&times;</span>
+                                            <h5 id="modal_date_0"></h5><br>
+                                            <table class="table table-striped">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Low UV Index</th>
+                                                        <td id="low_0"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Moderate UV Index</th>
+                                                        <td id="moderate_0"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <span><b>Recommened Activities</b></span><div id="exc_act_0"></div><br>
+                                            <span><b>Not Recommened Activities</b></span><div id="poor_act_0"></div>
+
+                                            <span><b>Before you let your children play outside, two things can be done:</b></span><br>
+                                            <div class="text-center">
+                                                <div class="row">
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="card">
+                                                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                                                <img src="~/assets/img/UVData2.png" class="img-fluid" style="height: 175px; width: 500px;" />
+
+                                                                <a href="@Url.Action("Data","Data")"  target="_blank">
+                                                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                
+                                                                <p class="card-text">
+                                                                    Check the <b>current UV Index</b> and use the <b>proper protectors</b>
+                                                                </p>
+                                                                <a href="@Url.Action("Data","Data")"  target="_blank" class="btn btn-primary">Click to check</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="card">
+                                                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                                                <img src="~/assets/img/protectorSport.jpg" class="img-fluid" style="height: 175px; width: 500px;" />
+                                                                <a href="@Url.Action("ProSport", "Home")"  target="_blank">
+                                                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                
+                                                                <p class="card-text">
+                                                                    Check how to <b>stay safe</b> when <b>taking sports</b> under sunlight
+                                                                </p>
+                                                                <a href="@Url.Action("ProSport", "Home")"  target="_blank" class="btn btn-primary">Click to check</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <img src="~/assets/img/havefun.png" class="center1" />
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div id="modal_1" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" id="close_1">&times;</span>
+                                            <h5 id="modal_date_1"></h5><br>
+                                            <table class="table table-striped">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Low UV Index</th>
+                                                        <td id="low_1"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Moderate UV Index</th>
+                                                        <td id="moderate_1"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <span><b>Recommened Activities</b></span><div id="exc_act_1"></div><br>
+                                            <span><b>Not Recommened Activities</b></span><div id="poor_act_1"></div>
+
+                                            <span><b>Before you let your children play outside, two things can be done:</b></span><br>
+                                            <div class="text-center">
+                                                <div class="row">
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="card">
+                                                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                                                <img src="~/assets/img/UVData2.png" class="img-fluid" style="height: 175px; width: 500px;" />
+
+                                                                <a href="@Url.Action("Data","Data")" target="_blank">
+                                                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                
+                                                                <p class="card-text">
+                                                                    Check the <b>current UV Index</b> and use the <b>proper protectors</b>
+                                                                </p>
+                                                                <a href="@Url.Action("Data","Data")" target="_blank" class="btn btn-primary">Click to check</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="card">
+                                                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                                                <img src="~/assets/img/protectorSport.jpg" class="img-fluid" style="height: 175px; width: 500px;" />
+                                                                <a href="@Url.Action("ProSport", "Home")" target="_blank">
+                                                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                
+                                                                <p class="card-text">
+                                                                    Check how to <b>stay safe</b> when <b>taking sports</b> under sunlight
+                                                                </p>
+                                                                <a href="@Url.Action("ProSport", "Home")" target="_blank" class="btn btn-primary">Click to check</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <img src="~/assets/img/havefun.png" class="center1" />
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div id="modal_2" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" id="close_2">&times;</span>
+                                            <h5 id="modal_date_2"></h5><br>
+                                            <table class="table table-striped">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Low UV Index</th>
+                                                        <td id="low_2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Moderate UV Index</th>
+                                                        <td id="moderate_2"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <span><b>Recommened Activities</b></span><div id="exc_act_2"></div><br>
+                                            <span><b>Not Recommened Activities</b></span><div id="poor_act_2"></div>
+
+                                            <span><b>Before you let your children play outside, two things can be done:</b></span><br>
+                                            <div class="text-center">
+                                                <div class="row">
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="card">
+                                                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                                                <img src="~/assets/img/UVData2.png" class="img-fluid" style="height: 175px; width: 500px;" />
+
+                                                                <a href="@Url.Action("Data","Data")" target="_blank">
+                                                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                
+                                                                <p class="card-text">
+                                                                    Check the <b>current UV Index</b> and use the <b>proper protectors</b>
+                                                                </p>
+                                                                <a href="@Url.Action("Data","Data")"  target="_blank" class="btn btn-primary">Click to check</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="card">
+                                                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                                                <img src="~/assets/img/protectorSport.jpg" class="img-fluid" style="height: 175px; width: 500px;" />
+                                                                <a href="@Url.Action("ProSport", "Home")" target="_blank">
+                                                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                
+                                                                <p class="card-text">
+                                                                    Check how to <b>stay safe</b> when <b>taking sports</b> under sunlight
+                                                                </p>
+                                                                <a href="@Url.Action("ProSport", "Home")" target="_blank" class="btn btn-primary">Click to check</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <img src="~/assets/img/havefun.png" class="center1" />
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div id="modal_3" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" id="close_3">&times;</span>
+                                            <h5 id="modal_date_3"></h5><br>
+                                            <table class="table table-striped">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Low UV Index</th>
+                                                        <td id="low_3"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Moderate UV Index</th>
+                                                        <td id="moderate_3"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <span><b>Recommened Activities</b></span><div id="exc_act_3"></div><br>
+                                            <span><b>Not Recommened Activities</b></span><div id="poor_act_3"></div>
+
+                                            <span><b>Before you let your children play outside, two things can be done:</b></span><br>
+                                            <div class="text-center">
+                                                <div class="row">
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="card">
+                                                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                                                <img src="~/assets/img/UVData2.png" class="img-fluid" style="height: 175px; width: 500px;" />
+
+                                                                <a href="@Url.Action("Data","Data")" target="_blank">
+                                                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                
+                                                                <p class="card-text">
+                                                                    Check the <b>current UV Index</b> and use the <b>proper protectors</b>
+                                                                </p>
+                                                                <a href="@Url.Action("Data","Data")" target="_blank" class="btn btn-primary">Click to check</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="card">
+                                                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                                                <img src="~/assets/img/protectorSport.jpg" class="img-fluid" style="height: 175px; width: 500px;" />
+                                                                <a href="@Url.Action("ProSport", "Home")" target="_blank">
+                                                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                
+                                                                <p class="card-text">
+                                                                    Check how to <b>stay safe</b> when <b>taking sports</b> under sunlight
+                                                                </p>
+                                                                <a href="@Url.Action("ProSport", "Home")" target="_blank" class="btn btn-primary">Click to check</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <img src="~/assets/img/havefun.png" class="center1" />
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div id="modal_4" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" id="close_4">&times;</span>
+                                            <h5 id="modal_date_4"></h5><br>
+                                            <table class="table table-striped">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>Low UV Index</th>
+                                                        <td id="low_4"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Moderate UV Index</th>
+                                                        <td id="moderate_4"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <span><b>Recommened Activities</b></span><div id="exc_act_4"></div><br>
+                                            <span><b>Not Recommened Activities</b></span><div id="poor_act_4"></div>
+
+                                            <span><b>Before you let your children play outside, two things can be done:</b></span><br>
+                                            <div class="text-center">
+                                                <div class="row">
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="card">
+                                                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                                                <img src="~/assets/img/UVData2.png" class="img-fluid" style="height: 175px; width: 500px;" />
+
+                                                                <a href="@Url.Action("Data","Data")" target="_blank">
+                                                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                
+                                                                <p class="card-text">
+                                                                    Check the <b>current UV Index</b> and use the <b>proper protectors</b>
+                                                                </p>
+                                                                <a href="@Url.Action("Data","Data")" target="_blank" class="btn btn-primary">Click to check</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="card">
+                                                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                                                <img src="~/assets/img/protectorSport.jpg" class="img-fluid" style="height: 175px; width: 500px;" />
+                                                                <a href="@Url.Action("ProSport", "Home")" target="_blank">
+                                                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                
+                                                                <p class="card-text">
+                                                                    Check how to <b>stay safe</b> when <b>taking sports</b> under sunlight
+                                                                </p>
+                                                                <a href="@Url.Action("ProSport", "Home")" target="_blank" class="btn btn-primary">Click to check</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <img src="~/assets/img/havefun.png" class="center1" />
+                                            <br>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        // Classify UVR
+        function get_level(uvr) {
+            if (uvr < 3) {
+                return "Low"
+            }
+            else if (uvr >= 3 && uvr < 6) {
+                return "Moderate"
+            }
+            else if (uvr >= 6 && uvr < 8) {
+                return "High"
+            }
+            else if (uvr >= 8 && uvr < 10) {
+                return "Very High"
+            }
+            else {
+                return "Extreme"
+            }
+        }
+
+        // Get corresponding image for each activity
+        function get_activity_img(activity_list) {
+            var output = []
+
+            output.push(`<table class="table table-striped activity_table"><tbody><tr>`);
+            activity_list.forEach(activity => {
+                if (activity == "Stay Home") {
+                    img_name = "stay_home.png"
+                    activity_name = "stay home"
+                }
+                else {
+                    img_name = activity + ".png"
+                    activity_name = activity.replaceAll(`_`, ` `)
+                }
+                output.push(`<td><img class="activity_img" src="../../assets/img/${img_name}" alt="${activity_name}"></td>`)
+            });
+            output.push(`</tr><tr>`);
+
+            activity_list.forEach(activity => {
+                if (activity == "Stay Home") {
+                    activity_name = "stay home"
+                }
+                else {
+                    activity_name = activity.replaceAll(`_`, ` `)
+                }
+
+                output.push(`<td>${activity_name}</td>`)
+            });
+
+            output.push(`</tr></tbody></table>`);
+            return output.join('')
+        }
+
+        //change color based on uv level
+        function get_uv_color(uvr) {
+            switch (true) {
+                case (uvr <= 2): return '#04b617';
+                case (uvr <= 5): return '#ffec00';
+                case (uvr <= 7): return '#ff8e00';
+                case (uvr <= 10): return '#c62f2f';
+                case (uvr > 10): return '#7f06bb';
+            }
+        }
+
+        // Fill data into the table
+        function update_table(data, row) {
+            // Fill data into the table
+            document.getElementById('date_' + row).innerHTML = data[row]['date'];
+
+            document.getElementById('uv_' + row).innerHTML = data[row]['max_uvr'];
+            document.getElementById('uv_' + row).style.textDecoration = "underline";
+            document.getElementById('uv_' + row).style.textDecorationColor = get_uv_color(data[row]['max_uvr']);
+
+            document.getElementById('level_' + row).innerHTML = get_level(data[row]['max_uvr']);
+            //document.getElementById('level' + row).style.textDecoration = "underline";
+            //document.getElementById('level' + row).style.textDecorationColor = get_uv_color(data[row]['max_uvr']);
+
+            // Get activities
+            document.getElementById('exc_act_' + row).innerHTML = get_activity_img(data[row]['excellent_activites'].slice(0, 6));
+            document.getElementById('poor_act_' + row).innerHTML = get_activity_img(data[row]['poor_activites'].slice(0, 6));
+
+            // Show the table
+            document.getElementById('future_table').style.display = "block";
+        }
+
+        // Convert list of schedules into HTML
+        function list_schedule(schedule_list) {
+            var output = []
+            schedule_list.forEach(element => {
+                output.push(`
+                      <span>${element}</span><br>
+                    `)
+            });
+            return output.join('');
+        }
+
+        // Get info for the future UV table
+        function get_futures() {
+            const postcode = document.getElementById('postcode').value;
+
+            // Get max UVR for next 5 days using BackEnd API
+            console.log("https://lemonumbrella.azurewebsites.net/next_5days_i3?postcode=" + postcode)
+            $.ajax({
+                type: "GET",
+                dataType: "text",
+                url: "https://lemonumbrella.azurewebsites.net/next_5days_i3?postcode=" + postcode,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                },
+                success: function (data) {
+                    const all_days = JSON.parse(data.replaceAll(`'`, `"`));
+                    console.log(all_days);
+
+                    // Put data into the table
+                    for (let i = 0; i < 5; i++) {
+                        update_table(all_days, i);
+                    }
+                },
+                error: function (data) {
+                    alert("Please try again")
+                }
+            });
+        }
+
+        // Function to forecast for a specific day
+        function get_forecast(row, modal_num) {
+            const dt = document.getElementById("date_" + row).innerHTML;
+            const postcode = document.getElementById('postcode').value;
+
+            // Get schedule for 1 day using BackEnd API
+            $.ajax({
+                type: "GET",
+                dataType: "text",
+                url: "https://lemonumbrella.azurewebsites.net/forecast_1day_i3?day=" + dt + "&postcode=" + postcode,
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                },
+                success: function (data) {
+                    const schedule = JSON.parse(data.replaceAll(`'`, `"`));
+
+                    document.getElementById('modal_date_' + row).innerHTML = "The following table shows the schedule for when the UV Index would be Low or Moderate on the day: " + dt;
+                    document.getElementById('low_' + row).innerHTML = list_schedule(schedule['low_uv']);
+                    document.getElementById('moderate_' + row).innerHTML = list_schedule(schedule['moderate_uv']);
+
+                    modal_num.style.display = "block";
+                },
+                error: function (data) {
+                    alert("Please try again")
+                }
+            });
+        }
+
+        // Detect all modals
+        var modal_0 = document.getElementById("modal_0");
+        var modal_1 = document.getElementById("modal_1");
+        var modal_2 = document.getElementById("modal_2");
+        var modal_3 = document.getElementById("modal_3");
+        var modal_4 = document.getElementById("modal_4");
+
+        // Detect all open buttons
+        var button_0 = document.getElementById("button_0");
+        var button_1 = document.getElementById("button_1");
+        var button_2 = document.getElementById("button_2");
+        var button_3 = document.getElementById("button_3");
+        var button_4 = document.getElementById("button_4");
+
+        // Detect all close buttons
+        var close_0 = document.getElementById("close_0");
+        var close_1 = document.getElementById("close_1");
+        var close_2 = document.getElementById("close_2");
+        var close_3 = document.getElementById("close_3");
+        var close_4 = document.getElementById("close_4");
+
+        // Handle open buttons
+        button_0.onclick = function () {
+            get_forecast(0, modal_0);
+        }
+        button_1.onclick = function () {
+            get_forecast(1, modal_1);
+        }
+        button_2.onclick = function () {
+            get_forecast(2, modal_2);
+        }
+        button_3.onclick = function () {
+            get_forecast(3, modal_3);
+        }
+        button_4.onclick = function () {
+            get_forecast(4, modal_4);
+        }
+
+        // Handle close buttons
+        close_0.onclick = function () {
+            modal_0.style.display = "none";
+        }
+        close_1.onclick = function () {
+            modal_1.style.display = "none";
+        }
+        close_2.onclick = function () {
+            modal_2.style.display = "none";
+        }
+        close_3.onclick = function () {
+            modal_3.style.display = "none";
+        }
+        close_4.onclick = function () {
+            modal_4.style.display = "none";
+        }
+
+        // Close modal when click elsewhere
+        window.onclick = function (event) {
+            if (event.target == modal_0) {
+                modal_0.style.display = "none";
+            }
+            if (event.target == modal_1) {
+                modal_1.style.display = "none";
+            }
+            if (event.target == modal_2) {
+                modal_2.style.display = "none";
+            }
+            if (event.target == modal_3) {
+                modal_3.style.display = "none";
+            }
+            if (event.target == modal_4) {
+                modal_4.style.display = "none";
+            }
+        }
+
+    </script>
+</body>
+
+</html>

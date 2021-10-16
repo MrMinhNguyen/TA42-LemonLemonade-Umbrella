@@ -1,0 +1,374 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Clothes and Umbrella</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="~/Content/TA42CommonCSS.css" rel="stylesheet" />
+    <style>
+        .modal-content {
+            width: 650px;
+        }
+        .flip-card {
+            background-color: transparent;
+            width: 300px;
+            height: 200px;
+            border: 1px solid #f1f1f1;
+            perspective: 1000px; /* Remove this if you don't want the 3D effect */
+        }
+
+        /* This container is needed to position the front and back side */
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        /* Do an horizontal flip when you move the mouse over the flip box container */
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Position the front and back side */
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden; /* Safari */
+            backface-visibility: hidden;
+        }
+
+        /* Style the front side (fallback if image is missing) */
+        .flip-card-front {
+            background-color: #bbb;
+            color: black;
+        }
+
+        /* Style the back side */
+        .flip-card-back {
+            background-color: #ffc107;
+            color: black;
+            transform: rotateY(180deg);
+        }
+
+
+    </style>
+</head>
+
+<body style="margin-top: 88px !important">
+    <!-- Page Header-->
+    <header class="masthead" style=" background-image: url('../../assets/img/clothtitle.jpg');">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-10 col-xl-10">
+                    <div class="page-heading">
+                        <h1>Clothes and Umbrella</h1>
+                        <span class="subheading">Protect your children's skin with sun protective clothing</span>
+                        <br />
+                        <span class="subheading"> AND </span>
+                        <br />
+                        <span class="subheading">Choose the correct cloth to protect us and our children</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Page Header-->
+
+    <div class="container">
+        <div class="row d-flex justify-content-center mt-5">
+            <div class="col-lg-9">
+                <!-- Section: Design block -->
+                <section>
+                    <div class="card">
+                        <div class="card-body p-5">
+                            <div class="w3-content w3-display-container">
+                                <div class='mySlides'>
+                                    <h3 id="why">Why clothes and umbrella?</h3>
+                                    <p>One of the simplest ways to protect your skin is to choose clothing or use an umbrella which absorbs or blocks harmful UV radiation.</p>
+                                    <img src="~/assets/img/clothumbrella.jpg" class="img-fluid shadow-5 rounded-5 mb-4" width="600" height="400" />
+                                    <p>Clothing and an umbrella with UPF labelings are great barriers between the sun’s UV and your skin, but clothing can better protect your skin as it gets closer to skin.</p>
+                                    <button class="carosel_button" id="upf_button">What is UPF?</button>
+
+                                    <div id="upf_modal" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close" id="close_upf">&times;</span>
+                                            <p>
+                                                <b>What is UPF?</b>
+                                                <br />
+                                                UPF is a measurement of the sun protection strength of clothing and fabrics used in outdoor shades.
+                                                <br />
+                                                It represents the ratio of UV radiation exposure with and without the protection of the measured textile.
+                                                <br />
+                                                The higher the UPF the stronger the protection against the sun.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='mySlides'>
+                                    <h3 id="materials">Choose the right materials to protect your children from UV</h3>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+                                                        <img src="~/assets/img/mediamodifier-7cERndkOyDw-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Coverage</h3>
+                                                        <p>Choose long sleeves, skirts and pants which can cover more skin to have better protection.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+                                                        <img src="~/assets/img/kate-mclean-jZSL_Dt4Fes-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Weave</h3>
+                                                        <p>The tighter the fabric structure, the less UV radiation passes through, the better the sun protection.<p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+                                                        <img src="~/assets/img/hossein-azarbad-AKtA4hj0gII-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Color</h3>
+                                                        Dark colors absorb ultraviolet rays more strongly than the lighter shades, which increases sun protection.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+
+                                                        <img src="~/assets/img/waldemar-brandt-cue0DuZ8cUU-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Weight</h3>
+                                                        The heavier of the same fabric, the lesser UVR it can against.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+                                                        <img src="~/assets/img/littpro-inc-BYFiSy0pGLc-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Stretch</h3>
+                                                        <p>The greater the stretch or tension put on a textile, the lower the UPF rating.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+
+                                                        <img src="~/assets/img/micaela-parente-g0vUgv-w5g4-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Water</h3>
+                                                        Some fabrics will provide less protection again UVR after absorbing water. So choose one providing protections from UV and dries quickly.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+
+                                                        <img src="~/assets/img/engin-akyurt-yCYVV8-kQNM-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Washing</h3>
+                                                        <p>Cotton-based fabrics tend to shrink after the first washing, thereby reducing the transmitted ultraviolet radiation. </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+
+                                                        <img src="~/assets/img/mike-petrucci-f6Xv0xs9JWg-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Addictives</h3>
+                                                        <p>UVR stabilizers or additives can be added to a range of textiles to improve their sun protection.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+                                                        <img src="~/assets/img/waldemar-brandt-5hDqrxz5Rpc-unsplash.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>Layering</h3>
+                                                        <p>Increasing UV protection by layering materials and clothes is a good idea.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="flip-card">
+                                                <div class="flip-card-inner">
+                                                    <div class="flip-card-front">
+
+                                                        <img src="~/assets/img/mecca-rash-vest-600x452.jpg" style="width:300px;height:200px;" />
+                                                    </div>
+                                                    <div class="flip-card-back">
+                                                        <h3>UV absorbers</h3>
+                                                        <p>Some clothing has been modified to absorb more UV light.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <p><b>Check the label on your clothes to ensure if they've been treated, and then follow the care instructions.</b></p>
+                                </div>
+                                <div class='mySlides'>
+                                    <h3 id="tips">Tips for parents</h3>
+                                    <p id="pdf1"><input type="checkbox">&nbsp;<span>Try to cover as much skin as possible with cool, loose-fitting clothing made from densely-woven fabric like cotton.</span></p>
+                                    <p id="pdf2"><input type="checkbox">&nbsp;<span>If your child is wearing a singlet top or a dress with thin straps, remember to layer them with a t-shirt or a shirt before going outside to play.</span></p>
+                                    <button class="carosel_button" onclick="genPDF()">Download this note</button>
+                                    <br>
+                                    <img src="~/assets/img/upfcloth.jpg" class="img-fluid shadow-5 rounded-5 mb-4" />
+
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+                                    <script>
+                                        function genPDF() {
+                                            var doc = new jsPDF('p', 'in', 'letter')
+
+                                            //Hat Recommendation.pdf
+                                            var title = $("#tips").text();
+                                            var text1 = "1. " + $("#pdf1").text();
+                                            var text2 = "2. " + $("#pdf2").text();
+                                            var lines1 = doc.splitTextToSize(text1, 7.5);
+                                            var lines2 = doc.splitTextToSize(text2, 7.5);
+
+                                            doc.text(0.5, 0.5, title);
+                                            doc.text(0.5, 1.5, lines1);
+                                            doc.text(0.5, 2.5, lines2);
+                                            doc.save('Clothes Recommendation.pdf');
+                                        }
+                                    </script>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="page_num"></div>
+                    <span class="caption text-muted">
+                        <button class="carosel_button" onclick="plusDivs(-1)">❮</button>
+                        <button class="carosel_button" onclick="plusDivs(1)">❯</button>
+                    </span>
+                </section>
+                <!-- Section: Design block -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal
+        var upf_modal = document.getElementById("upf_modal");
+        var upf_button = document.getElementById("upf_button");
+
+        // When the user clicks the button, open the modal
+        upf_button.onclick = function() {
+            upf_modal.style.display = "block";
+        }
+
+        var close_upf = document.getElementById("close_upf");
+        close_upf.onclick = function() {
+            upf_modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == upf_modal) {
+                upf_modal.style.display = "none";
+            }
+        }
+
+        // Carosel
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) { showDivs(slideIndex += n); }
+
+        function currentDiv(n) { showDivs(slideIndex = n); }
+
+        function showDivs(n) {
+            var i;
+            var pagenum = [];
+            var x = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            if (n > x.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = x.length}
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" w3-red", "");
+            }
+            x[slideIndex - 1].style.display = "block";
+            pagenum.push(`<p style="text-align:center">Pages: ${slideIndex}/${x.length}</p>`);
+            page_num.innerHTML = pagenum.join('');
+            dots[slideIndex-1].className += " w3-red";
+        }
+    </script>
+</body>
+</html>
