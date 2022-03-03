@@ -12,7 +12,7 @@
 
 
 # Introduction
-This a website that provides information on Sunlight Proection like displaying UV level and predicting UV level etc. It intends to help parents keep their children away from intense sunlight<br/><br/>  
+This a website that provides information on Sunlight Protection like displaying UV level and predicting UV level etc. It intends to help parents keep their children away from intense sunlight<br/><br/>  
 
 # System Architecture
 
