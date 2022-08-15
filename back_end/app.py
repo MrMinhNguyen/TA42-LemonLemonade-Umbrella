@@ -11,6 +11,7 @@ import datetime
 import itertools
 import operator
 from flask_cors import CORS
+import re
 
 
 # ------------------------------------------------------------------------------
@@ -52,19 +53,13 @@ def connect_to_db():
     lines = f.readlines()
     for l in lines:
         all_info.append(str(l).rstrip())
-        
-    db_info = {
-        'server_name': all_info[0],
-        'user_name': all_info[1],
-        'pwd': all_info[2],
-        'db_name': all_info[3] 
-    }
-
+    
+    # Return connection
     return mysql.connector.connect(
-        host=db_info['server_name'],
-        user=db_info['user_name'],
-        password=db_info['pwd'],
-        database=db_info['db_name']
+        host=all_info[0],
+        user=all_info[1],
+        password=all_info[2],
+        database=all_info[3] 
     )
 
 # Function to verify if the inout is a postcode or a date
@@ -85,13 +80,14 @@ def verify_input(value, is_number=True):
 
 # This function find the given suburb info from the database
 def find_coordinate(postcode):
-    db_connection = connect_to_db()
-    db_cursor = db_connection.cursor()
-    
     # If valid post code then return actual result
     try:
         # Verify postcode before create SQL query
         verify_input(postcode)
+
+        # Establish connection
+        db_connection = connect_to_db()
+        db_cursor = db_connection.cursor()
 
         # Get data using SQL query
         db_cursor.execute("SELECT * FROM suburbs WHERE postcode="+postcode)
@@ -222,7 +218,7 @@ def round_minute(hour_minute, forward=True):
 
 
 # -----------------------------------------------------------------------
-# ------------------------ Create the Aplication ------------------------
+# ------------------------ Establish the Aplication ---------------------
 # -----------------------------------------------------------------------
 app = Flask(__name__)
 CORS(app)
@@ -506,6 +502,10 @@ def uvr_protector():
 def single_protector():
 
     protector_name = request.args.get('protector_name')
+
+    # Verify input
+    if len(protector_name)>20 and not bool(re.match("^[A-Za-z_-]*$", protector_name)):
+        return "Invalid Request"
 
     # Query data from DB
     db_connection = connect_to_db()
